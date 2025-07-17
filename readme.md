@@ -22,11 +22,11 @@ Aplicativo web desenvolvido para o escritório de contabilidade **OnVale**, com 
 
 ## 🛠 Tecnologias Utilizadas
 
-----
+ ### (Frontend)
+- **React Native**: Biblioteca JavaScript para desenvolvimento de aplicativos móveis nativos.
+- **Expo**: Plataforma que simplifica o processo de criação, build e testes de apps React Native.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática, oferecendo maior segurança e produtividade no desenvolvimento.
 
-## 🗂 Estrutura do Projeto
-
-----
 
 ## 📈 Status do Projeto
 
