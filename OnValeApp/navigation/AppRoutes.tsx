@@ -11,7 +11,7 @@ function CustomDrawerContent(props: any) {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <View style={styles.header}>
-        <OnValeIcon size={100} style={{ marginRight: 16 }} />
+        <OnValeIcon size={100} />
       </View>
 
       <View style={styles.drawerItemsContainer}>
@@ -34,22 +34,23 @@ export default function AppRoutes() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
-        headerRight: () => (
-          <OnValeIcon size={40} style={{ marginRight: 16 }} />
-        ),
+        headerTintColor: '#000',
+        headerStyle: {
+          backgroundColor: '#f6f6f6',
+          height: 100,       // aumenta a altura do header
+        },
+        headerRight: () => <OnValeIcon size={40} />,
+        headerRightContainerStyle: {
+          paddingRight: 16,
+        },
         headerTitle: '',
         drawerStyle: {
           backgroundColor: '#f6f6f6',
           width: 300,
-
-
-          // ======= sombra iOS =======
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.1,
           shadowRadius: 4,
-
-          // ======= sombra Android =======
           elevation: 6,
         },
         drawerActiveBackgroundColor: '#9B1A1E',
@@ -66,7 +67,7 @@ export default function AppRoutes() {
 
 const styles = StyleSheet.create({
   drawerItemsContainer: {
-    marginTop: 20,
+    marginTop: 50,
     rowGap: 12,
     paddingHorizontal: 8,
   },
@@ -75,11 +76,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#33333346',
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    marginBottom: 10,
   },
   footer: {
     marginTop: 'auto',
