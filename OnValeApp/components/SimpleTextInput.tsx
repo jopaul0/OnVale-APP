@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+    View,
     TextInput,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity
 } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
 type SimpleTextInputProps = {
     backgroundColor?: string;
@@ -25,32 +28,53 @@ export default function SimpleTextInput({
     onChange,
     isPassword = false,
 }: SimpleTextInputProps) {
+    const [showPassword, setShowPassword] = useState(false);
+
     return (
-        <TextInput
-            style={[
-                styles.input,
-                {
-                    backgroundColor,
-                    borderColor,
-                    color: textColor,
-                },
-            ]}
-            placeholder={placeholder}
-            placeholderTextColor={placeholderTextColor}
-            value={value}
-            onChangeText={onChange}
-            secureTextEntry={isPassword}
-        />
+        <View style={[
+            styles.container,
+            { backgroundColor, borderColor }
+        ]}>
+            <TextInput
+                style={[styles.input, { color: textColor }]}
+                placeholder={placeholder}
+                placeholderTextColor={placeholderTextColor}
+                value={value}
+                onChangeText={onChange}
+                secureTextEntry={isPassword && !showPassword}
+                autoCapitalize="none"
+                cursorColor={textColor}
+            />
+            {isPassword && (
+                <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>
+                    <Feather
+                        name={showPassword ? 'eye' : 'eye-off'}
+                        size={20}
+                        color={placeholderTextColor}
+                        style={styles.icon}
+                    />
+                </TouchableOpacity>
+            )}
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    input: {
+    container: {
         width: '100%',
         height: 50,
         borderWidth: 1,
         borderRadius: 8,
-        paddingHorizontal: 16,
+        paddingHorizontal: 12,
         marginBottom: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    input: {
+        flex: 1,
+        fontSize: 16,
+    },
+    icon: {
+        marginLeft: 8,
     },
 });

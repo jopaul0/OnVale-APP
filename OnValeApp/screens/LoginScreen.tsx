@@ -1,3 +1,4 @@
+//REACT
 import React, { useState } from 'react';
 import {
   View,
@@ -7,18 +8,38 @@ import {
   Linking
 } from 'react-native';
 
+//COMPONENTS
 import SafeArea from '../components/SafeArea';
 import KeyboardScroll from '../components/KeyboardScroll';
 import SimpleButton from '../components/SimpleButton';
 import SimpleTextInput from '../components/SimpleTextInput';
 
+//FUNCTIONS
+import { useAuth } from '../navigation/AuthContext';
+
 export default function LoginScreen() {
+  //STATES
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  function handleLogin() {
-    console.log('Login:', email, senha);
+  //TEST
+  const credencials = {
+    email: "onvale@teste.com",
+    CNPJ: "123123123123",
+    password: "onvale123"
   }
+
+  const { login } = useAuth();
+
+  function handleLogin() {
+    if ((email === credencials.email || email === credencials.CNPJ) && senha === credencials.password) {
+      login();
+    }
+    else {
+      alert('Credenciais inválidas. Tente novamente.');
+    }
+  }
+  //TEST
 
   function handleSaibaMais() {
     Linking.openURL(

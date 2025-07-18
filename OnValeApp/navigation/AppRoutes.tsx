@@ -4,10 +4,12 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '
 import TabRoutes from './TabRoutes';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { OnValeIcon } from '../components/Icons';
+import { useAuth } from './AuthContext';
 
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props: any) {
+  const { logout } = useAuth();
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <View style={styles.header}>
@@ -20,7 +22,7 @@ function CustomDrawerContent(props: any) {
 
 
       <View style={styles.footer}>
-        <TouchableOpacity onPress={() => console.log('Logout')}>
+        <TouchableOpacity onPress={() => logout()}>
           <Text style={styles.logoutText}>Sair</Text>
         </TouchableOpacity>
       </View>
