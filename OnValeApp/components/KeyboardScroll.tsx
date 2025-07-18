@@ -4,36 +4,31 @@ import {
     ScrollView,
     Platform,
     StyleSheet,
-    Keyboard,
-    TouchableWithoutFeedback,
-    View,
+    Dimensions
 } from 'react-native';
 
 const KeyboardScroll: FC<{ children: ReactNode }> = ({ children }) => (
     <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 20 : 0}
         style={styles.wrapper}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <ScrollView
-                contentContainerStyle={styles.scrollContent}
-                keyboardShouldPersistTaps="handled"
-            >
-                <View style={styles.fillSpace}>{children}</View>
-            </ScrollView>
-        </TouchableWithoutFeedback>
+        <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+        >
+            {children}
+        </ScrollView>
     </KeyboardAvoidingView>
 );
 
 export default KeyboardScroll;
 
+const { height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
     wrapper: { flex: 1 },
     scrollContent: {
-        flexGrow: 1,
-    },
-    fillSpace: {
-        flex: 1, // garante que o conteúdo preencha o restante da tela
+        minHeight: height,
+        flexGrow: 1,       
     },
 });
