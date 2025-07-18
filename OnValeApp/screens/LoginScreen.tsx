@@ -13,6 +13,7 @@ import SafeArea from '../components/SafeArea';
 import KeyboardScroll from '../components/KeyboardScroll';
 import SimpleButton from '../components/SimpleButton';
 import SimpleTextInput from '../components/SimpleTextInput';
+import { ErrorModal } from '../components/Modals';
 
 //FUNCTIONS
 import { useAuth } from '../navigation/AuthContext';
@@ -21,6 +22,7 @@ export default function LoginScreen() {
   //STATES
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
 
   //TEST
   const credencials = {
@@ -36,7 +38,9 @@ export default function LoginScreen() {
       login();
     }
     else {
-      alert('Credenciais inválidas. Tente novamente.');
+      setErrorModalVisible(true);
+      setEmail('');
+      setSenha('');
     }
   }
   //TEST
@@ -83,6 +87,11 @@ export default function LoginScreen() {
           </Text>
         </View>
       </KeyboardScroll>
+      <ErrorModal
+        visible={errorModalVisible}
+        onClose={() => setErrorModalVisible(false)}
+        message="Credenciais inválidas. Tente novamente."
+      />
     </SafeArea>
   );
 }
