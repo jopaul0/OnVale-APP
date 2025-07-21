@@ -24,7 +24,7 @@ export default function AppRoutes() {
         headerLeftContainerStyle: {
           alignItems: 'center'
         },
-        headerRight: () => <OnValeIcon size={30} />,
+        headerRight: () => <OnValeIcon size={40} />,
         headerRightContainerStyle: {
           paddingRight: 16,
           alignItems: 'center'
