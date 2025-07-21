@@ -20,10 +20,11 @@ export default function AppRoutes() {
           backgroundColor: '#f6f6f6',
           height: 60,
         },
+        headerStatusBarHeight: 0,
         headerLeftContainerStyle: {
-          alignItems: 'center',
+          alignItems: 'center'
         },
-        headerRight: () => <OnValeIcon size={40} />,
+        headerRight: () => <OnValeIcon size={30} />,
         headerRightContainerStyle: {
           paddingRight: 16,
           alignItems: 'center'

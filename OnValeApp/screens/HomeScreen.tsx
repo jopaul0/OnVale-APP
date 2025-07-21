@@ -3,7 +3,6 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 //COMPONENTS
-import SafeArea from '../components/SafeArea';
 import FileExplorer, { ExplorerNode } from '../components/FileExplorer';
 
 //TEST
