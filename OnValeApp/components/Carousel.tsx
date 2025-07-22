@@ -1,4 +1,3 @@
-// components/BannerCarousel.tsx
 import React, { useRef, useState } from 'react';
 import {
   View,
@@ -7,65 +6,49 @@ import {
   StyleSheet,
   Dimensions,
   NativeSyntheticEvent,
-  NativeScrollEvent
+  NativeScrollEvent,
 } from 'react-native';
 
-const { width } = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export type Banner = {
-  id: string;
-  image: any; // require('../assets/…') ou { uri: string }
-};
+export type Banner = { id: string; image: any };
 
-type BannerCarouselProps = {
+type Props = {
   data: Banner[];
   height?: number;
+  mode?: 'cover' | 'contain';
 };
 
-export default function Carousel({
-  data,
-  height = 200
-}: BannerCarouselProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default function BannerCarousel({ data, height = 200, mode = 'cover' }: Props) {
+  const [active, setActive] = useState(0);
   const ref = useRef<FlatList<Banner>>(null);
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const slide = Math.round(e.nativeEvent.contentOffset.x / width);
-    if (slide !== activeIndex) {
-      setActiveIndex(slide);
-    }
+    const i = Math.round(e.nativeEvent.contentOffset.x / SCREEN_WIDTH);
+    if (i !== active) setActive(i);
   };
 
   return (
-    <View style={[styles.container, { height }]}>
+    <View style={[styles.wrapper, { height }]}>
       <FlatList
         ref={ref}
         data={data}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         horizontal
-        pagingEnabled
+        pagingEnabled          // ocupa 100% da tela por slide
         showsHorizontalScrollIndicator={false}
         onScroll={onScroll}
         scrollEventThrottle={16}
         renderItem={({ item }) => (
-          <Image
-            source={item.image}
-            style={[styles.image, { width, height }]}
-            resizeMode="cover"
-          />
+          <View style={[styles.slide, { width: SCREEN_WIDTH, height }]}>
+            <Image source={item.image} style={styles.img} resizeMode={mode} />
+          </View>
         )}
       />
 
-      {/* Pagination dots */}
       <View style={styles.pagination}>
         {data.map((_, i) => (
-          <View
-            key={i}
-            style={[
-              styles.dot,
-              i === activeIndex ? styles.dotActive : undefined
-            ]}
-          />
+          <View key={i} style={[styles.dot, i === active && styles.dotActive]} />
         ))}
       </View>
     </View>
@@ -73,11 +56,16 @@ export default function Carousel({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'relative'
+  wrapper: {
+    position: 'relative',
+    overflow: 'hidden'
   },
-  image: {
-    flex: 1
+  slide: {
+    overflow: 'hidden'
+  },
+  img: {
+    width: '100%',
+    height: '100%',
   },
   pagination: {
     position: 'absolute',
@@ -85,16 +73,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#ffffff77',
-    marginHorizontal: 4
+    backgroundColor: '#ffffff66',
+    marginHorizontal: 4,
   },
-  dotActive: {
-    backgroundColor: '#fff'
-  }
+  dotActive: { backgroundColor: '#fff' },
 });

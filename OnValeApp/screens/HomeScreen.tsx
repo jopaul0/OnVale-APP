@@ -1,12 +1,12 @@
-///REACT
-import React from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+//REACT
+import React, { useState, useMemo, useCallback } from 'react';
+import { ScrollView, View, StyleSheet } from 'react-native';
 
 //COMPONENTS
 import FileExplorer, { ExplorerNode } from '../components/FileExplorer';
 import Carousel, { Banner } from '../components/Carousel';
+import Shortcuts from '../components/Shortcuts';
 
-//TEST
 const fakeData: ExplorerNode[] = [
   {
     id: '1',
@@ -36,21 +36,68 @@ const banners: Banner[] = [
 ];
 
 export default function HomeScreen() {
+  const [pathStack, setPathStack] = useState<ExplorerNode[]>([]);
+
+
+  //SHORTCUTS
+  const getNodeById = useCallback((id: string, nodes: ExplorerNode[]): ExplorerNode | null => {
+    for (const n of nodes) {
+      if (n.id === id) return n;
+      if (n.children) {
+        const found = getNodeById(id, n.children);
+        if (found) return found;
+      }
+    }
+    return null;
+  }, []);
+
+  const buildPathStack = useCallback((id: string) => {
+    const stack: ExplorerNode[] = [];
+    function dfs(nodes: ExplorerNode[], targetId: string, trail: ExplorerNode[]) {
+      for (const n of nodes) {
+        const newTrail = [...trail, n];
+        if (n.id === targetId) {
+          stack.push(...newTrail.filter(x => x.type === 'folder'));
+          return true;
+        }
+        if (n.children && dfs(n.children, targetId, newTrail)) return true;
+      }
+      return false;
+    }
+    dfs(fakeData, id, []);
+    return stack;
+  }, []);
+
+  const jumpToFolder = useCallback((folderId: string) => {
+    const stack = buildPathStack(folderId);
+    setPathStack(stack);
+  }, [buildPathStack]);
+
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={styles.carouselContainer}>
-        <Carousel data={banners} height={300} />
-      </View>
-      <FileExplorer data={fakeData} />
-    </ScrollView>
+    <View style={{ flex: 1 }}>
+        <View style={styles.carouselContainer}>
+          <Carousel data={banners} height={300} />
+        </View>
+
+        <FileExplorer
+          data={fakeData}
+          pathStack={pathStack}
+          setPathStack={setPathStack}
+        />
+     
+      <Shortcuts
+        onHome={() => setPathStack([])}
+        onGoBack={() => setPathStack(s => s.slice(0, -1))}
+        onOpenFolderPessoal={() => jumpToFolder('1')}
+        onOpenFolderFiscal={() => jumpToFolder('2')}
+        onPlus={() => console.log('Clicouuuuu!')}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   carouselContainer: {
-    margin:16,
-    borderRadius: 16,
     overflow: 'hidden',
   },
 });
-

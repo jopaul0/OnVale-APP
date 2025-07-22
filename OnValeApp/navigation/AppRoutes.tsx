@@ -3,10 +3,10 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //COMPONENTS
-import TabRoutes from './TabRoutes';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { OnValeIcon } from '../components/Icons';
 import { CustomDrawer } from '../components/CustomDrawer';
+import HomeScreen from '../screens/HomeScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -45,7 +45,7 @@ export default function AppRoutes() {
         drawerLabelStyle: { fontSize: 16, fontWeight: 'bold' },
       }}
     >
-      <Drawer.Screen name="HomeDrawer" component={TabRoutes} options={{ title: 'Início' }} />
+      <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Início' }} />
       <Drawer.Screen name="SettingsScreen" component={SettingsScreen} options={{ title: 'Configurações' }} />
     </Drawer.Navigator>
   );
