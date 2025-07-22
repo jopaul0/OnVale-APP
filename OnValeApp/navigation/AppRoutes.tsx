@@ -7,6 +7,7 @@ import { SettingsScreen } from '../screens/SettingsScreen';
 import { OnValeIcon } from '../components/Icons';
 import { CustomDrawer } from '../components/CustomDrawer';
 import HomeScreen from '../screens/HomeScreen';
+import SupportScreen from '../screens/SupportScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +47,7 @@ export default function AppRoutes() {
       }}
     >
       <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Início' }} />
+      <Drawer.Screen name="SupportScreen" component={SupportScreen} options={{ title: 'Suporte' }} />
       <Drawer.Screen name="SettingsScreen" component={SettingsScreen} options={{ title: 'Configurações' }} />
     </Drawer.Navigator>
   );
