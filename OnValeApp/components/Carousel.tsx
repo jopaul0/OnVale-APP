@@ -7,11 +7,19 @@ import {
   Dimensions,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  Pressable,
+  Linking,
+  ImageSourcePropType,
 } from 'react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export type Banner = { id: string; image: any };
+export type Banner = {
+  id: string;
+  image: ImageSourcePropType;
+  url?: string;               
+  onPress?: () => void;   
+};
 
 type Props = {
   data: Banner[];
@@ -28,6 +36,17 @@ export default function BannerCarousel({ data, height = 200, mode = 'cover' }: P
     if (i !== active) setActive(i);
   };
 
+  const handleOpen = async (item: Banner) => {
+    if (item.onPress) return item.onPress();
+    if (item.url) {
+      try {
+        await Linking.openURL(item.url);
+      } catch (err) {
+        console.warn('Não foi possível abrir o link:', err);
+      }
+    }
+  };
+
   return (
     <View style={[styles.wrapper, { height }]}>
       <FlatList
@@ -35,14 +54,17 @@ export default function BannerCarousel({ data, height = 200, mode = 'cover' }: P
         data={data}
         keyExtractor={(item) => item.id}
         horizontal
-        pagingEnabled          // ocupa 100% da tela por slide
+        pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={onScroll}
         scrollEventThrottle={16}
         renderItem={({ item }) => (
-          <View style={[styles.slide, { width: SCREEN_WIDTH, height }]}>
+          <Pressable
+            style={[styles.slide, { width: SCREEN_WIDTH, height }]}
+            onPress={() => handleOpen(item)}
+          >
             <Image source={item.image} style={styles.img} resizeMode={mode} />
-          </View>
+          </Pressable>
         )}
       />
 
@@ -58,10 +80,10 @@ export default function BannerCarousel({ data, height = 200, mode = 'cover' }: P
 const styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   slide: {
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   img: {
     width: '100%',
@@ -79,8 +101,8 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#ffffff66',
+    backgroundColor: '#00000066',
     marginHorizontal: 4,
   },
-  dotActive: { backgroundColor: '#fff' },
+  dotActive: { backgroundColor: '#9B1A1E' },
 });

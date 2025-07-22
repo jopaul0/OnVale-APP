@@ -1,7 +1,12 @@
-//REACT
+// components/FileExplorer.tsx
 import React from 'react';
 import {
-  View, Text, StyleSheet, FlatList, TouchableOpacity
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  FlatListProps,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
@@ -12,18 +17,24 @@ export type ExplorerNode = {
   children?: ExplorerNode[];
 };
 
-type FileExplorerProps = {
+type BaseProps = {
   data: ExplorerNode[];
   pathStack: ExplorerNode[];
   setPathStack: React.Dispatch<React.SetStateAction<ExplorerNode[]>>;
+  onFilePress?: (file: ExplorerNode) => void;
 };
+
+// Permite passar qualquer prop extra do FlatList (header, footer, estilos…)
+type FileExplorerProps = BaseProps &
+  Partial<FlatListProps<ExplorerNode>>;
 
 export default function FileExplorer({
   data,
   pathStack,
-  setPathStack
+  setPathStack,
+  onFilePress,
+  ...flatListProps
 }: FileExplorerProps) {
-
   const currentNodes =
     (pathStack.length === 0
       ? data
@@ -40,19 +51,18 @@ export default function FileExplorer({
   }
 
   function renderItem({ item }: { item: ExplorerNode }) {
+    const isFolder = item.type === 'folder';
     return (
       <TouchableOpacity
         style={styles.row}
         onPress={() =>
-          item.type === 'folder'
-            ? enterFolder(item)
-            : console.log('Abrir arquivo', item.name)
+          isFolder ? enterFolder(item) : onFilePress?.(item)
         }
       >
         <Feather
-          name={item.type === 'folder' ? 'folder' : 'file'}
+          name={isFolder ? 'folder' : 'file'}
           size={24}
-          color={item.type === 'folder' ? '#f39c12' : '#333'}
+          color={isFolder ? '#f39c12' : '#333'}
           style={styles.icon}
         />
         <Text style={styles.name}>{item.name}</Text>
@@ -62,10 +72,11 @@ export default function FileExplorer({
 
   return (
     <View style={styles.container}>
+      {/* Breadcrumb */}
       <View style={styles.breadcrumb}>
         {pathStack.length > 0 && (
           <TouchableOpacity onPress={goBack} style={styles.backButton}>
-            <Feather name="arrow-left" size={20} color="#333" />
+            <Feather name="arrow-left" size={20} color="#fff" />
           </TouchableOpacity>
         )}
         <Text style={styles.pathText}>
@@ -80,21 +91,25 @@ export default function FileExplorer({
         keyExtractor={n => n.id}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        {...flatListProps}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: '#f6f6f6' },
+
   breadcrumb: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#9B1A1E',
+    color: '#fff',
     padding: 12,
-    backgroundColor: '#f0f0f0',
   },
   backButton: { marginRight: 8 },
-  pathText: { fontWeight: 'bold', fontSize: 16 },
+  pathText: { fontWeight: 'bold', fontSize: 16, flexShrink: 1, color: '#fff' },
+
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -102,6 +117,7 @@ const styles = StyleSheet.create({
   },
   icon: { marginRight: 12 },
   name: { fontSize: 16, flexShrink: 1 },
+
   separator: {
     height: 1,
     backgroundColor: '#eee',

@@ -30,8 +30,8 @@ const fakeData: ExplorerNode[] = [
 ];
 
 const banners: Banner[] = [
-  { id: '1', image: require('../assets/banner1.jpeg') },
-  { id: '2', image: require('../assets/banner2.jpeg') },
+  { id: '1', image: require('../assets/banner1.jpg'), url: "https://www.instagram.com/p/DMKvuo2st0i/" },
+  { id: '2', image: require('../assets/banner2.jpg'), url: "https://www.instagram.com/p/DMIK8L0MQZM/" },
   { id: '3', image: require('../assets/banner3.jpeg') },
 ];
 
@@ -75,16 +75,16 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-        <View style={styles.carouselContainer}>
-          <Carousel data={banners} height={300} />
-        </View>
+      <View style={styles.carouselContainer}>
+        <Carousel data={banners} height={300} />
+      </View>
 
-        <FileExplorer
-          data={fakeData}
-          pathStack={pathStack}
-          setPathStack={setPathStack}
-        />
-     
+      <FileExplorer
+        data={fakeData}
+        pathStack={pathStack}
+        setPathStack={setPathStack}
+      />
+
       <Shortcuts
         onHome={() => setPathStack([])}
         onGoBack={() => setPathStack(s => s.slice(0, -1))}
@@ -98,6 +98,6 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   carouselContainer: {
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
 });
