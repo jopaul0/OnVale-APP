@@ -74,6 +74,20 @@ export function CustomModal({ visible, onClose, children }: CustomModalProps) {
     );
 }
 
+export function BlockingModal({ visible, children }: { visible: boolean; children: React.ReactNode }) {
+    return (
+        <Modal transparent animationType="fade" visible={visible}>
+            <View style={styles.overlay}>
+                <View style={styles.modalBox}>
+                    {/* sem botão de fechar */}
+                    {children}
+                </View>
+            </View>
+        </Modal>
+    );
+}
+
+
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
