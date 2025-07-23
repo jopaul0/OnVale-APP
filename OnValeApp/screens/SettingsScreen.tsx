@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 
 //FUNCTION
-export function SettingsScreen() {
+export default function SettingsScreen() {
   //JSX
   return (
     <View>

@@ -6,7 +6,7 @@ import { Text, StyleSheet, View } from 'react-native';
 import useTheme from './Themes';
 
 //FUNCTION
-export const SectionTitle = ({ title }: { title: string }) => {
+export default function SectionTitle ({ title }: { title: string }) {
 
   //STYLE
   const styles = StyleSheet.create({

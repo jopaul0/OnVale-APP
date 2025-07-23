@@ -3,14 +3,16 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //SCREENS
-import { SettingsScreen } from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SupportScreen from '../screens/SupportScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 //COMPONENTS
 import { OnValeIcon } from '../components/Icons';
 import { CustomDrawer } from '../components/CustomDrawer';
 import useTheme from '../components/Themes';
+
 
 //CONSTANTS
 const Drawer = createDrawerNavigator();
@@ -57,6 +59,7 @@ export default function AppRoutes() {
       }}
     >
       <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Início' }} />
+      <Drawer.Screen name="ProfileScreen" component={ProfileScreen} options={{ title: 'Perfil' }} />
       <Drawer.Screen name="SupportScreen" component={SupportScreen} options={{ title: 'Suporte' }} />
       <Drawer.Screen name="SettingsScreen" component={SettingsScreen} options={{ title: 'Configurações' }} />
     </Drawer.Navigator>

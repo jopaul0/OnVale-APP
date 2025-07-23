@@ -15,7 +15,7 @@ import useTheme from './Themes';
 type Props = { question: string; answer: string };
 
 //FUNCTION
-export const FaqItem = ({ question, answer }: Props) => {
+export default function FaqItem ({ question, answer }: Props) {
   //STATES
   const [open, setOpen] = useState(false);
   const [contentH, setContentH] = useState(0);
