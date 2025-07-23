@@ -1,29 +1,27 @@
-// components/DebtGuard.tsx
+//REACT
 import React from 'react';
 import { View, Text, StyleSheet, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-// CONTEXT
+//CONTEXT
 import { useDebt } from '../navigation/DebtContext';
 
-// MODALS
+//COMPONENTS
 import { BlockingModal } from './Modals';
 
+//THEMES
 import useTheme from './Themes';
 
+//TYPE
 type Props = { children: React.ReactNode };
 
+//FUNCTION
 export default function DebtGuard({ children }: Props) {
+    //HOOK
     const { debtLevel } = useDebt();
+
+    //STYLE
     const { colors } = useTheme();
-
-    const handleSupport = () => {
-        Linking.openURL(
-            'https://api.whatsapp.com/send?phone=5512982044681&text=Ol%C3%A1%20OnVale!%20Preciso%20de%20suporte%20para%20regularizar%20minhas%20pend%C3%AAncias%20no%20app.%20Podem%20me%20ajudar%3F'
-        );
-    }
-
-
     const styles = StyleSheet.create({
         banner: {
             flexDirection: 'row',
@@ -64,8 +62,14 @@ export default function DebtGuard({ children }: Props) {
         }
     });
 
+    //HANDLE
+    const handleSupport = () => {
+        Linking.openURL(
+            'https://api.whatsapp.com/send?phone=5512982044681&text=Ol%C3%A1%20OnVale!%20Preciso%20de%20suporte%20para%20regularizar%20minhas%20pend%C3%AAncias%20no%20app.%20Podem%20me%20ajudar%3F'
+        );
+    }
 
-    // nível 2: modal bloqueante
+    //JSX
     if (debtLevel === 2) {
         return (
             <BlockingModal visible>
@@ -82,7 +86,6 @@ export default function DebtGuard({ children }: Props) {
             </BlockingModal>
         );
     }
-
     return (
         <>
             {/* nível 1: banner de aviso */}

@@ -1,12 +1,15 @@
+//REACT
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { StyleProp, ViewStyle } from 'react-native';
 
+//TYPES
 type OnValeIconProps = {
   size?: number;
   style?: StyleProp<ViewStyle>;
 };
 
+//FUNCTION
 export function OnValeIcon({ size = 100, style }: OnValeIconProps) {
   return (
     <Svg

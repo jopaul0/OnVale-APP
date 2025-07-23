@@ -1,45 +1,56 @@
 //REACT
-import React, { useState, useMemo, useCallback } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, StyleSheet } from 'react-native';
 
 //COMPONENTS
 import FileExplorer, { ExplorerNode } from '../components/FileExplorer';
 import Carousel, { Banner } from '../components/Carousel';
 import Shortcuts from '../components/Shortcuts';
 
-const fakeData: ExplorerNode[] = [
-  {
-    id: '1',
-    name: 'Departamento Pessoal',
-    type: 'folder',
-    children: [
-      { id: '1-1', name: 'Folha_de_Pagamento.pdf', type: 'file' },
-      { id: '1-2', name: 'Registros.csv', type: 'file' },
-    ],
-  },
-  {
-    id: '2',
-    name: 'Departamento Fiscal',
-    type: 'folder',
-    children: [
-      { id: '2-1', name: 'Nota1.xml', type: 'file' },
-      { id: '2-2', name: 'Relatorio.xlsx', type: 'file' },
-    ],
-  },
-  { id: '3', name: 'Manual.pdf', type: 'file' },
-];
-
-const banners: Banner[] = [
-  { id: '1', image: require('../assets/banner1.jpg'), url: "https://www.instagram.com/p/DMKvuo2st0i/" },
-  { id: '2', image: require('../assets/banner2.jpg'), url: "https://www.instagram.com/p/DMIK8L0MQZM/" },
-  { id: '3', image: require('../assets/banner3.jpeg') },
-];
-
+//FUNCTION
 export default function HomeScreen() {
+  //STATE
   const [pathStack, setPathStack] = useState<ExplorerNode[]>([]);
 
+  //STYLE
+  const styles = StyleSheet.create({
+    carouselContainer: {
+      overflow: 'hidden'
+    },
+  });
 
-  //SHORTCUTS
+
+  //TEST
+  const fakeData: ExplorerNode[] = [
+    {
+      id: '1',
+      name: 'Departamento Pessoal',
+      type: 'folder',
+      children: [
+        { id: '1-1', name: 'Folha_de_Pagamento.pdf', type: 'file' },
+        { id: '1-2', name: 'Registros.csv', type: 'file' },
+      ],
+    },
+    {
+      id: '2',
+      name: 'Departamento Fiscal',
+      type: 'folder',
+      children: [
+        { id: '2-1', name: 'Nota1.xml', type: 'file' },
+        { id: '2-2', name: 'Relatorio.xlsx', type: 'file' },
+      ],
+    },
+    { id: '3', name: 'Manual.pdf', type: 'file' },
+  ];
+
+  const banners: Banner[] = [
+    { id: '1', image: require('../assets/banner1.jpg'), url: "https://www.instagram.com/p/DMKvuo2st0i/" },
+    { id: '2', image: require('../assets/banner2.jpg'), url: "https://www.instagram.com/p/DMIK8L0MQZM/" },
+    { id: '3', image: require('../assets/banner3.jpeg') },
+  ];
+
+
+  //HANDLES
   const getNodeById = useCallback((id: string, nodes: ExplorerNode[]): ExplorerNode | null => {
     for (const n of nodes) {
       if (n.id === id) return n;
@@ -73,6 +84,7 @@ export default function HomeScreen() {
     setPathStack(stack);
   }, [buildPathStack]);
 
+  //JSX
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.carouselContainer}>
@@ -96,8 +108,3 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  carouselContainer: {
-    overflow: 'hidden'
-  },
-});

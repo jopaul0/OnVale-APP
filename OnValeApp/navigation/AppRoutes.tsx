@@ -2,18 +2,26 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-//COMPONENTS
+//SCREENS
 import { SettingsScreen } from '../screens/SettingsScreen';
-import { OnValeIcon } from '../components/Icons';
-import { CustomDrawer } from '../components/CustomDrawer';
 import HomeScreen from '../screens/HomeScreen';
 import SupportScreen from '../screens/SupportScreen';
+
+//COMPONENTS
+import { OnValeIcon } from '../components/Icons';
+import { CustomDrawer } from '../components/CustomDrawer';
 import useTheme from '../components/Themes';
 
+//CONSTANTS
 const Drawer = createDrawerNavigator();
 
+//FUNCTIONS
 export default function AppRoutes() {
+
+  //STYLE
   const { colors } = useTheme();
+
+  //JSX
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}

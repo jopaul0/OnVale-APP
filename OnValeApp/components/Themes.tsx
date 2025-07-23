@@ -1,5 +1,7 @@
+//REACT
 import { useColorScheme } from 'react-native';
 
+//THEMES
 export const darkTheme = {
     background: '#1e1e1e',
     background2: '#2c2c2c',
@@ -14,6 +16,7 @@ export const lightTheme = {
     text: '#1e1e1e',
 };
 
+//HOOK
 export default function useTheme() {
     const scheme = useColorScheme();
     const isDark = scheme === 'dark';

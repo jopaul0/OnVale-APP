@@ -3,6 +3,7 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
+//TYPE
 type Props = {
     onPlus: () => void;
     onHome: () => void;
@@ -11,6 +12,7 @@ type Props = {
     onOpenFolderFiscal: () => void;
 };
 
+//FUNCTIONs
 export default function Shortcuts({
     onPlus,
     onHome,
@@ -18,6 +20,8 @@ export default function Shortcuts({
     onOpenFolderPessoal,
     onOpenFolderFiscal,
 }: Props) {
+
+    //JSX
     return (
         <View style={styles.bar}>
             <Shortcut icon="arrow-left" onPress={onGoBack} />
@@ -30,6 +34,7 @@ export default function Shortcuts({
 }
 
 function Shortcut({ icon, onPress }: { icon: any; onPress: () => void }) {
+    //JSX
     return (
         <TouchableOpacity style={styles.item} onPress={onPress}>
             <Feather name={icon} size={24} color="#fff" />
@@ -37,6 +42,7 @@ function Shortcut({ icon, onPress }: { icon: any; onPress: () => void }) {
     );
 }
 
+//STYLE
 const styles = StyleSheet.create({
     bar: {
         position: 'absolute',

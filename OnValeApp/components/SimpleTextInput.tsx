@@ -1,3 +1,4 @@
+//REACT
 import React, { useState } from 'react';
 import {
   View,
@@ -7,8 +8,10 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
+//THEME
 import useTheme from './Themes';
 
+//TYPE
 type SimpleTextInputProps = {
   backgroundColor?: string;
   borderColor?: string;
@@ -20,6 +23,7 @@ type SimpleTextInputProps = {
   isPassword?: boolean;
 };
 
+//FUNCTION
 export default function SimpleTextInput({
   backgroundColor,
   borderColor,
@@ -30,9 +34,32 @@ export default function SimpleTextInput({
   onChange,
   isPassword = false,
 }: SimpleTextInputProps) {
+  //STATE
   const [showPassword, setShowPassword] = useState(false);
-  const { colors } = useTheme();
 
+  //STYLE
+  const { colors } = useTheme();
+  const styles = StyleSheet.create({
+    container: {
+      width: '100%',
+      height: 50,
+      borderWidth: 1,
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      marginBottom: 16,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    input: {
+      flex: 1,
+      fontSize: 16,
+    },
+    icon: {
+      marginLeft: 8,
+    },
+  });
+
+  //JSX
   return (
     <View
       style={[
@@ -67,22 +94,3 @@ export default function SimpleTextInput({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    marginBottom: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-  },
-  icon: {
-    marginLeft: 8,
-  },
-});

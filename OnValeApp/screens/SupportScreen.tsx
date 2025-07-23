@@ -6,6 +6,8 @@ import { ScrollView, View } from 'react-native';
 import { SectionTitle } from '../components/SectionTitle';
 import { FaqItem } from '../components/FaqItem';
 import { ContactCard } from '../components/ContactCard';
+
+//THEME
 import useTheme from '../components/Themes';
 
 //TEST
@@ -13,8 +15,11 @@ const FAQ = [
     { q: 'Como faço login?', a: 'Use seu CNPJ ou e-mail e senha cadastrados...' }
 ];
 
+//FUNCTION
 export default function SupportScreen() {
+    //STYLE
     const { colors } = useTheme();
+    //JSX
     return (
         <ScrollView style={{ flex: 1, backgroundColor: colors.background2 }}>
             <SectionTitle title="Perguntas Frequentes" />

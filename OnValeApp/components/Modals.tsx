@@ -1,3 +1,4 @@
+//REACT
 import React from 'react';
 import {
     Modal,
@@ -8,8 +9,11 @@ import {
     StyleSheet,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+
+//THEME
 import useTheme from './Themes';
 
+//TYPES
 type BaseModalProps = {
     visible: boolean;
     onClose: () => void;
@@ -22,9 +26,10 @@ type CustomModalProps = {
     children: React.ReactNode;
 };
 
+//FUNCTIONS
 export function SuccessModal({ visible, onClose, message }: BaseModalProps) {
     const { colors } = useTheme();
-
+    //JSX
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <TouchableOpacity activeOpacity={1} onPress={onClose} style={styles.overlay}>
@@ -44,7 +49,7 @@ export function SuccessModal({ visible, onClose, message }: BaseModalProps) {
 
 export function ErrorModal({ visible, onClose, message }: BaseModalProps) {
     const { colors } = useTheme();
-
+    //JSX
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <TouchableOpacity activeOpacity={1} onPress={onClose} style={styles.overlay}>
@@ -64,7 +69,7 @@ export function ErrorModal({ visible, onClose, message }: BaseModalProps) {
 
 export function CustomModal({ visible, onClose, children }: CustomModalProps) {
     const { colors } = useTheme();
-
+    //JSX
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <TouchableOpacity activeOpacity={1} onPress={onClose} style={styles.overlay}>
@@ -83,7 +88,7 @@ export function CustomModal({ visible, onClose, children }: CustomModalProps) {
 
 export function BlockingModal({ visible, children }: { visible: boolean; children: React.ReactNode }) {
     const { colors } = useTheme();
-
+    //JSX
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <View style={styles.overlay}>
@@ -95,6 +100,7 @@ export function BlockingModal({ visible, children }: { visible: boolean; childre
     );
 }
 
+//STYLE
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,

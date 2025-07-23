@@ -1,3 +1,4 @@
+//REACT
 import React, { useRef, useState } from 'react';
 import {
   View,
@@ -12,13 +13,14 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
+
+//TYPES
 export type Banner = {
   id: string;
   image: ImageSourcePropType;
-  url?: string;               
-  onPress?: () => void;   
+  url?: string;
+  onPress?: () => void;
 };
 
 type Props = {
@@ -27,10 +29,46 @@ type Props = {
   mode?: 'cover' | 'contain';
 };
 
+//FUNCTION
 export default function BannerCarousel({ data, height = 200, mode = 'cover' }: Props) {
+  //STATE
   const [active, setActive] = useState(0);
+  //REF
   const ref = useRef<FlatList<Banner>>(null);
 
+  //STYLE
+  const { width: SCREEN_WIDTH } = Dimensions.get('window');
+  const styles = StyleSheet.create({
+    wrapper: {
+      position: 'relative',
+      overflow: 'hidden',
+    },
+    slide: {
+      overflow: 'hidden',
+    },
+    img: {
+      width: '100%',
+      height: '100%',
+    },
+    pagination: {
+      position: 'absolute',
+      bottom: 8,
+      left: 0,
+      right: 0,
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    dot: {
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: '#00000066',
+      marginHorizontal: 4,
+    },
+    dotActive: { backgroundColor: '#9B1A1E' },
+  });
+
+  //HANDLES
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const i = Math.round(e.nativeEvent.contentOffset.x / SCREEN_WIDTH);
     if (i !== active) setActive(i);
@@ -47,6 +85,7 @@ export default function BannerCarousel({ data, height = 200, mode = 'cover' }: P
     }
   };
 
+  //JSX
   return (
     <View style={[styles.wrapper, { height }]}>
       <FlatList
@@ -77,32 +116,4 @@ export default function BannerCarousel({ data, height = 200, mode = 'cover' }: P
   );
 }
 
-const styles = StyleSheet.create({
-  wrapper: {
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  slide: {
-    overflow: 'hidden',
-  },
-  img: {
-    width: '100%',
-    height: '100%',
-  },
-  pagination: {
-    position: 'absolute',
-    bottom: 8,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#00000066',
-    marginHorizontal: 4,
-  },
-  dotActive: { backgroundColor: '#9B1A1E' },
-});
+

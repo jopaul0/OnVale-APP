@@ -1,3 +1,4 @@
+//REACT
 import React, { FC, ReactNode } from 'react';
 import {
     KeyboardAvoidingView,
@@ -7,10 +8,17 @@ import {
     Dimensions
 } from 'react-native';
 
+//THEME
 import useTheme from './Themes';
 
-const KeyboardScroll: FC<{ children: ReactNode }> = ({ children }) => {
+//TYPE
+type props = {
+    children: ReactNode
+}
 
+//FUNCTION
+export default function KeyboardScroll ({ children } : props) {
+    //STYLE
     const { height } = Dimensions.get('window');
     const { colors } = useTheme();
     const styles = StyleSheet.create({
@@ -20,6 +28,7 @@ const KeyboardScroll: FC<{ children: ReactNode }> = ({ children }) => {
             flexGrow: 1,
         },
     });
+    //JSX
     return (
         <KeyboardAvoidingView
             style={styles.wrapper}
@@ -35,4 +44,4 @@ const KeyboardScroll: FC<{ children: ReactNode }> = ({ children }) => {
     );
 }
 
-export default KeyboardScroll;
+

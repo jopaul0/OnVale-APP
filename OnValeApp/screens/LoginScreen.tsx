@@ -14,25 +14,64 @@ import SimpleButton from '../components/SimpleButton';
 import SimpleTextInput from '../components/SimpleTextInput';
 import { ErrorModal } from '../components/Modals';
 
-//FUNCTIONS
+//CONTEXT
 import { useAuth } from '../navigation/AuthContext';
+
+//THEME
 import useTheme from '../components/Themes';
 
+//FUNCTION
 export default function LoginScreen() {
-  const { isDark, colors } = useTheme();
-
+  //STATES
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
 
+  //HOOK
+  const { login } = useAuth();
+
+  //STYLE
+  const { isDark, colors } = useTheme();
+  const styles = StyleSheet.create({
+    LogoContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 50,
+    },
+    container: {
+      flex: 1,
+      paddingHorizontal: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      borderTopLeftRadius: 150,
+      paddingVertical: 32,
+    },
+    logo: {
+      width: 500,
+      height: 100,
+    },
+    title: {
+      fontSize: 28,
+      marginBottom: 24,
+    },
+    footerText: {
+      marginTop: 24,
+    },
+    link: {
+      fontWeight: 'bold',
+    },
+  });
+
+  //TEST
   const credencials = {
     email: "onvale@teste.com",
     CNPJ: "123123123123",
     password: "onvale123"
   }
 
-  const { login } = useAuth();
 
+  //HANDLES
   function handleLogin() {
     if ((email === credencials.email || email === credencials.CNPJ) && senha === credencials.password) {
       login();
@@ -49,6 +88,7 @@ export default function LoginScreen() {
     );
   }
 
+  //JSX
   return (
     <KeyboardScroll>
       <View style={styles.LogoContainer}>
@@ -91,33 +131,3 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  LogoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 50,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    borderTopLeftRadius: 150,
-    paddingVertical: 32,
-  },
-  logo: {
-    width: 500,
-    height: 100,
-  },
-  title: {
-    fontSize: 28,
-    marginBottom: 24,
-  },
-  footerText: {
-    marginTop: 24,
-  },
-  link: {
-    fontWeight: 'bold',
-  },
-});

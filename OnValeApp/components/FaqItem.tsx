@@ -8,28 +8,24 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+//THEME
 import useTheme from './Themes';
 
+//TYPE
 type Props = { question: string; answer: string };
 
+//FUNCTION
 export const FaqItem = ({ question, answer }: Props) => {
+  //STATES
   const [open, setOpen] = useState(false);
   const [contentH, setContentH] = useState(0);
 
+  //HOOKS
   const animatedHeight = useSharedValue(0);
   const animatedOpacity = useSharedValue(0);
 
+  //STYLE
   const { colors } = useTheme();
-
-  const toggle = () => {
-    setOpen(o => !o);
-    animatedHeight.value = withTiming(open ? 0 : contentH, { duration: 220 });
-    animatedOpacity.value = withTiming(open ? 0 : 1, { duration: 220 });
-  };
-
-  const onLayoutAnswer = (e: LayoutChangeEvent) => {
-    if (contentH === 0) setContentH(e.nativeEvent.layout.height);
-  };
 
   const styleAnim = useAnimatedStyle(() => ({
     height: animatedHeight.value,
@@ -46,6 +42,18 @@ export const FaqItem = ({ question, answer }: Props) => {
   });
 
 
+  //FUNCTIONS
+  const toggle = () => {
+    setOpen(o => !o);
+    animatedHeight.value = withTiming(open ? 0 : contentH, { duration: 220 });
+    animatedOpacity.value = withTiming(open ? 0 : 1, { duration: 220 });
+  };
+
+  const onLayoutAnswer = (e: LayoutChangeEvent) => {
+    if (contentH === 0) setContentH(e.nativeEvent.layout.height);
+  };
+
+  //JSX
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.header} onPress={toggle}>
