@@ -8,6 +8,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import useTheme from './Themes';
 
 type BaseModalProps = {
     visible: boolean;
@@ -22,16 +23,18 @@ type CustomModalProps = {
 };
 
 export function SuccessModal({ visible, onClose, message }: BaseModalProps) {
+    const { colors } = useTheme();
+
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <TouchableOpacity activeOpacity={1} onPress={onClose} style={styles.overlay}>
                 <TouchableWithoutFeedback>
-                    <View style={[styles.modalBox, styles.success]}>
+                    <View style={[styles.modalBox, styles.success, { backgroundColor: colors.background2 }]}>
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                            <Feather name="x" size={24} color="#333" />
+                            <Feather name="x" size={24} color={colors.text} />
                         </TouchableOpacity>
-                        <Text style={styles.title}>Sucesso</Text>
-                        <Text style={styles.message}>{message || 'Operação realizada com sucesso!'}</Text>
+                        <Text style={[styles.title, { color: colors.text }]}>Sucesso</Text>
+                        <Text style={[styles.message, { color: colors.text }]}>{message || 'Operação realizada com sucesso!'}</Text>
                     </View>
                 </TouchableWithoutFeedback>
             </TouchableOpacity>
@@ -40,16 +43,18 @@ export function SuccessModal({ visible, onClose, message }: BaseModalProps) {
 }
 
 export function ErrorModal({ visible, onClose, message }: BaseModalProps) {
+    const { colors } = useTheme();
+
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <TouchableOpacity activeOpacity={1} onPress={onClose} style={styles.overlay}>
                 <TouchableWithoutFeedback>
-                    <View style={[styles.modalBox, styles.error]}>
+                    <View style={[styles.modalBox, styles.error, { backgroundColor: colors.background2 }]}>
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                            <Feather name="x" size={24} color="#333" />
+                            <Feather name="x" size={24} color={colors.text} />
                         </TouchableOpacity>
-                        <Text style={styles.title}>Erro</Text>
-                        <Text style={styles.message}>{message || 'Algo deu errado!'}</Text>
+                        <Text style={[styles.title, { color: colors.text }]}>Erro</Text>
+                        <Text style={[styles.message, { color: colors.text }]}>{message || 'Algo deu errado!'}</Text>
                     </View>
                 </TouchableWithoutFeedback>
             </TouchableOpacity>
@@ -58,13 +63,15 @@ export function ErrorModal({ visible, onClose, message }: BaseModalProps) {
 }
 
 export function CustomModal({ visible, onClose, children }: CustomModalProps) {
+    const { colors } = useTheme();
+
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <TouchableOpacity activeOpacity={1} onPress={onClose} style={styles.overlay}>
                 <TouchableWithoutFeedback>
-                    <View style={styles.modalBox}>
+                    <View style={[styles.modalBox, { backgroundColor: colors.background2 }]}>
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                            <Feather name="x" size={24} color="#333" />
+                            <Feather name="x" size={24} color={colors.text} />
                         </TouchableOpacity>
                         {children}
                     </View>
@@ -75,18 +82,18 @@ export function CustomModal({ visible, onClose, children }: CustomModalProps) {
 }
 
 export function BlockingModal({ visible, children }: { visible: boolean; children: React.ReactNode }) {
+    const { colors } = useTheme();
+
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <View style={styles.overlay}>
-                <View style={styles.modalBox}>
-                    {/* sem botão de fechar */}
+                <View style={[styles.modalBox, { backgroundColor: colors.background2 }]}>
                     {children}
                 </View>
             </View>
         </Modal>
     );
 }
-
 
 const styles = StyleSheet.create({
     overlay: {
@@ -99,7 +106,6 @@ const styles = StyleSheet.create({
         width: '85%',
         borderRadius: 12,
         padding: 20,
-        backgroundColor: '#f6f6f6',
         position: 'relative',
     },
     success: {
@@ -119,11 +125,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#000',
         marginBottom: 8,
     },
     message: {
         fontSize: 16,
-        color: '#333',
     },
 });

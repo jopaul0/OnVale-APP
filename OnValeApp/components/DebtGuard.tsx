@@ -9,16 +9,61 @@ import { useDebt } from '../navigation/DebtContext';
 // MODALS
 import { BlockingModal } from './Modals';
 
+import useTheme from './Themes';
+
 type Props = { children: React.ReactNode };
 
 export default function DebtGuard({ children }: Props) {
     const { debtLevel } = useDebt();
+    const { colors } = useTheme();
 
     const handleSupport = () => {
         Linking.openURL(
             'https://api.whatsapp.com/send?phone=5512982044681&text=Ol%C3%A1%20OnVale!%20Preciso%20de%20suporte%20para%20regularizar%20minhas%20pend%C3%AAncias%20no%20app.%20Podem%20me%20ajudar%3F'
         );
     }
+
+
+    const styles = StyleSheet.create({
+        banner: {
+            flexDirection: 'row',
+            backgroundColor: '#FFC107',
+            padding: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        bannerText: {
+            color: '#333',
+            fontWeight: '600',
+            textAlign: 'center',
+            flexShrink: 1,
+        },
+
+        modalContent: {
+            paddingTop: 30,
+            alignItems: 'center',
+        },
+        modalIcon: {
+            marginBottom: 16,
+        },
+        title: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginBottom: 12,
+            color: colors.text,
+            textAlign: 'center',
+        },
+        text: {
+            fontSize: 16,
+            color: colors.text,
+            textAlign: 'center',
+            lineHeight: 22,
+        },
+        link: {
+            fontWeight: 'bold',
+        }
+    });
+
 
     // nível 2: modal bloqueante
     if (debtLevel === 2) {
@@ -54,42 +99,3 @@ export default function DebtGuard({ children }: Props) {
     );
 }
 
-const styles = StyleSheet.create({
-    banner: {
-        flexDirection: 'row',
-        backgroundColor: '#FFC107',
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    bannerText: {
-        color: '#333',
-        fontWeight: '600',
-        textAlign: 'center',
-        flexShrink: 1,
-    },
-
-    modalContent: {
-        paddingTop: 30,
-        alignItems: 'center',
-    },
-    modalIcon: {
-        marginBottom: 16,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 12,
-        color: '#000',
-        textAlign: 'center',
-    },
-    text: {
-        fontSize: 16,
-        color: '#333',
-        textAlign: 'center',
-        lineHeight: 22,
-    },
-    link: {
-        fontWeight: 'bold',
-    }
-});

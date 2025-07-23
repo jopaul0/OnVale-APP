@@ -8,6 +8,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import useTheme from './Themes';
+
 type Props = { question: string; answer: string };
 
 export const FaqItem = ({ question, answer }: Props) => {
@@ -16,6 +18,8 @@ export const FaqItem = ({ question, answer }: Props) => {
 
   const animatedHeight = useSharedValue(0);
   const animatedOpacity = useSharedValue(0);
+
+  const { colors } = useTheme();
 
   const toggle = () => {
     setOpen(o => !o);
@@ -32,11 +36,21 @@ export const FaqItem = ({ question, answer }: Props) => {
     opacity: animatedOpacity.value,
   }));
 
+  const styles = StyleSheet.create({
+    container: { paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, backgroundColor: colors.background, borderBottomColor: colors.background2 },
+    header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+    question: { fontSize: 16, fontWeight: '600', color: colors.text, flex: 1, marginRight: 12 },
+    hiddenMeasure: { position: 'absolute', opacity: 0, zIndex: -1, left: 0, right: 0 },
+    answerBox: { overflow: 'hidden' },
+    answer: { marginTop: 8, color: colors.text, lineHeight: 20, fontSize: 14 },
+  });
+
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.header} onPress={toggle}>
         <Text style={styles.question}>{question}</Text>
-        <Feather name={open ? 'chevron-up' : 'chevron-down'} size={20} color="#333" />
+        <Feather name={open ? 'chevron-up' : 'chevron-down'} size={20} color={colors.text} />
       </TouchableOpacity>
 
       {contentH === 0 && (
@@ -52,12 +66,3 @@ export const FaqItem = ({ question, answer }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { paddingHorizontal:16, paddingVertical:12, borderBottomWidth:1, borderBottomColor:'#eee' },
-  header: { flexDirection:'row', justifyContent:'space-between', alignItems:'center' },
-  question: { fontSize:16, fontWeight:'600', color:'#333', flex:1, marginRight:12 },
-
-  hiddenMeasure: { position: 'absolute', opacity: 0, zIndex: -1, left: 0, right: 0 },
-  answerBox: { overflow: 'hidden' },
-  answer: { marginTop:8, color:'#555', lineHeight:20, fontSize:14 },
-});

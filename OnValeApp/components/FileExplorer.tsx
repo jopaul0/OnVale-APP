@@ -9,6 +9,7 @@ import {
   FlatListProps,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import useTheme from './Themes';
 
 export type ExplorerNode = {
   id: string;
@@ -24,9 +25,7 @@ type BaseProps = {
   onFilePress?: (file: ExplorerNode) => void;
 };
 
-// Permite passar qualquer prop extra do FlatList (header, footer, estilos…)
-type FileExplorerProps = BaseProps &
-  Partial<FlatListProps<ExplorerNode>>;
+type FileExplorerProps = BaseProps & Partial<FlatListProps<ExplorerNode>>;
 
 export default function FileExplorer({
   data,
@@ -35,10 +34,12 @@ export default function FileExplorer({
   onFilePress,
   ...flatListProps
 }: FileExplorerProps) {
+  const { colors } = useTheme();
+
   const currentNodes =
-    (pathStack.length === 0
+    pathStack.length === 0
       ? data
-      : pathStack[pathStack.length - 1].children) || [];
+      : pathStack[pathStack.length - 1].children || [];
 
   function enterFolder(node: ExplorerNode) {
     if (node.type === 'folder') {
@@ -54,24 +55,22 @@ export default function FileExplorer({
     const isFolder = item.type === 'folder';
     return (
       <TouchableOpacity
-        style={styles.row}
-        onPress={() =>
-          isFolder ? enterFolder(item) : onFilePress?.(item)
-        }
+        style={[styles.row]}
+        onPress={() => (isFolder ? enterFolder(item) : onFilePress?.(item))}
       >
         <Feather
           name={isFolder ? 'folder' : 'file'}
           size={24}
-          color={isFolder ? '#f39c12' : '#333'}
+          color={isFolder ? '#f39c12' : colors.text}
           style={styles.icon}
         />
-        <Text style={styles.name}>{item.name}</Text>
+        <Text style={[styles.name, { color: colors.text }]}>{item.name}</Text>
       </TouchableOpacity>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background2 }]}>
       {/* Breadcrumb */}
       <View style={styles.breadcrumb}>
         {pathStack.length > 0 && (
@@ -90,7 +89,9 @@ export default function FileExplorer({
         data={currentNodes}
         keyExtractor={n => n.id}
         renderItem={renderItem}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        ItemSeparatorComponent={() => (
+          <View style={[styles.separator, { backgroundColor: colors.border }]} />
+        )}
         {...flatListProps}
       />
     </View>
@@ -98,29 +99,38 @@ export default function FileExplorer({
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f6f6f6' },
-
+  container: {
+    flex: 1,
+  },
   breadcrumb: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#9B1A1E',
-    color: '#fff',
     padding: 12,
   },
-  backButton: { marginRight: 8 },
-  pathText: { fontWeight: 'bold', fontSize: 16, flexShrink: 1, color: '#fff' },
-
+  backButton: {
+    marginRight: 8,
+  },
+  pathText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    flexShrink: 1,
+    color: '#fff',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
   },
-  icon: { marginRight: 12 },
-  name: { fontSize: 16, flexShrink: 1 },
-
+  icon: {
+    marginRight: 12,
+  },
+  name: {
+    fontSize: 16,
+    flexShrink: 1,
+  },
   separator: {
     height: 1,
-    backgroundColor: '#eee',
     marginLeft: 52,
   },
 });

@@ -5,7 +5,7 @@ import {
   Text,
   StyleSheet,
   Image,
-  Linking
+  Linking,
 } from 'react-native';
 
 //COMPONENTS
@@ -16,14 +16,15 @@ import { ErrorModal } from '../components/Modals';
 
 //FUNCTIONS
 import { useAuth } from '../navigation/AuthContext';
+import useTheme from '../components/Themes';
 
 export default function LoginScreen() {
-  //STATES
+  const { isDark, colors } = useTheme();
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
 
-  //TEST
   const credencials = {
     email: "onvale@teste.com",
     CNPJ: "123123123123",
@@ -35,14 +36,12 @@ export default function LoginScreen() {
   function handleLogin() {
     if ((email === credencials.email || email === credencials.CNPJ) && senha === credencials.password) {
       login();
-    }
-    else {
+    } else {
       setErrorModalVisible(true);
       setEmail('');
       setSenha('');
     }
   }
-  //TEST
 
   function handleSaibaMais() {
     Linking.openURL(
@@ -50,19 +49,17 @@ export default function LoginScreen() {
     );
   }
 
-
   return (
-
     <KeyboardScroll>
       <View style={styles.LogoContainer}>
         <Image
-          source={require('../assets/logo-onvale.png')}
+          source={isDark ? require('../assets/logo-onvale-white.png') : require('../assets/logo-onvale.png')}
           style={styles.logo}
           resizeMode="contain"
         />
       </View>
-      <View style={styles.container}>
-        <Text style={styles.title}>Login</Text>
+      <View style={[styles.container, { backgroundColor: colors.text }]}>
+        <Text style={[styles.title, { color: colors.background }]}>Login</Text>
 
         <SimpleTextInput
           placeholder="CNPJ ou email"
@@ -78,9 +75,9 @@ export default function LoginScreen() {
         />
         <SimpleButton title="Login" onPress={handleLogin} />
 
-        <Text style={styles.footerText}>
+        <Text style={[styles.footerText, { color: colors.background }]}>
           Não possui cadastro?{' '}
-          <Text style={styles.link} onPress={handleSaibaMais}>
+          <Text style={[styles.link, { color: colors.background }]} onPress={handleSaibaMais}>
             Saiba mais
           </Text>
         </Text>
@@ -105,27 +102,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1e1e1e',
     width: '100%',
     borderTopLeftRadius: 150,
     paddingVertical: 32,
   },
-
   logo: {
     width: 500,
     height: 100,
   },
   title: {
     fontSize: 28,
-    color: '#fff',
     marginBottom: 24,
   },
   footerText: {
-    color: '#ccc',
     marginTop: 24,
   },
   link: {
-    color: '#fff',
     fontWeight: 'bold',
   },
 });

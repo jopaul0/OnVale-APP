@@ -6,6 +6,7 @@ import { ScrollView, View } from 'react-native';
 import { SectionTitle } from '../components/SectionTitle';
 import { FaqItem } from '../components/FaqItem';
 import { ContactCard } from '../components/ContactCard';
+import useTheme from '../components/Themes';
 
 //TEST
 const FAQ = [
@@ -13,10 +14,11 @@ const FAQ = [
 ];
 
 export default function SupportScreen() {
+    const { colors } = useTheme();
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
+        <ScrollView style={{ flex: 1, backgroundColor: colors.background2 }}>
             <SectionTitle title="Perguntas Frequentes" />
-            <View style={{ backgroundColor: '#fff' }}>
+            <View>
                 {FAQ.map((f, i) => (
                     <FaqItem key={i} question={f.q} answer={f.a} />
                 ))}

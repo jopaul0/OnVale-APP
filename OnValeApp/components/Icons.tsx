@@ -16,7 +16,7 @@ export function OnValeIcon({ size = 100, style }: OnValeIconProps) {
       viewBox="0 0 1325 1325"
       fill="none"
     >
-      <Circle cx="662.5" cy="662.5" r="662.5" fill="#f6f6f6" />
+      <Circle cx="662.5" cy="662.5" r="662.5" fill="#fefefe" />
       <Path
         d="M662.176 36C529.659 36 427.51 77.441 393 98.1615L662.176 870L921 98.1615C889.941 77.441 794.694 36 662.176 36Z"
         fill="#9B1A1E"

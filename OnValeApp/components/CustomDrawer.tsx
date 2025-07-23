@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#33333346',
+    borderBottomColor: '#7c7c7cff',
   },
   footer: {
     marginTop: 'auto',
     padding: 20,
     borderTopWidth: 1,
-    borderTopColor: '#33333346',
+    borderTopColor: '#7c7c7cff',
 
   },
   logoutText: {

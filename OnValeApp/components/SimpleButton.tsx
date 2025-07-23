@@ -4,6 +4,7 @@ import {
     StyleSheet,
     GestureResponderEvent,
 } from 'react-native';
+import useTheme from './Themes';
 
 type SimpleButtonProps = {
     title: string;
@@ -15,22 +16,25 @@ type SimpleButtonProps = {
 export default function SimpleButton({
     title,
     onPress,
-    backgroundColor = '#f6f6f6',
-    textColor = '#1e1e1e',
+    backgroundColor,
+    textColor,
 }: SimpleButtonProps) {
+    const { colors } = useTheme();
+
     return (
         <TouchableOpacity
-            style={[styles.button, { backgroundColor }]}
+            style={[styles.button, { backgroundColor: backgroundColor ?? colors.background2 }]}
             onPress={onPress}
         >
-            <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
+            <Text style={[styles.buttonText, { color: textColor ?? colors.text }]}>
+                {title}
+            </Text>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#fff',
         paddingVertical: 14,
         paddingHorizontal: 32,
         borderRadius: 8,

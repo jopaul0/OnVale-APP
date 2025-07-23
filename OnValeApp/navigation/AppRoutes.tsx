@@ -8,17 +8,19 @@ import { OnValeIcon } from '../components/Icons';
 import { CustomDrawer } from '../components/CustomDrawer';
 import HomeScreen from '../screens/HomeScreen';
 import SupportScreen from '../screens/SupportScreen';
+import useTheme from '../components/Themes';
 
 const Drawer = createDrawerNavigator();
 
 export default function AppRoutes() {
+  const { colors } = useTheme();
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
-        headerTintColor: '#000',
+        headerTintColor: colors.text,
         headerStyle: {
-          backgroundColor: '#f6f6f6',
+          backgroundColor: colors.background,
           height: 60,
         },
         headerStatusBarHeight: 0,
@@ -32,7 +34,7 @@ export default function AppRoutes() {
         },
         headerTitle: '',
         drawerStyle: {
-          backgroundColor: '#f6f6f6',
+          backgroundColor: colors.background,
           width: 300,
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 2 },
@@ -42,7 +44,7 @@ export default function AppRoutes() {
         },
         drawerActiveBackgroundColor: '#9B1A1E',
         drawerActiveTintColor: '#fff',
-        drawerInactiveTintColor: '#aaa',
+        drawerInactiveTintColor: colors.text,
         drawerLabelStyle: { fontSize: 16, fontWeight: 'bold' },
       }}
     >

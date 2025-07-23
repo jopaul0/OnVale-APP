@@ -7,10 +7,14 @@ import { AuthProvider } from './navigation/AuthContext';
 import AuthRoutes from './navigation/AuthRoutes';
 import { DebtProvider } from './navigation/DebtContext';
 
+//COMPONENTS
+import useTheme from './components/Themes';
+
 export default function App() {
+  const { colors } = useTheme();
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#f6f6f6' }} edges={['top', 'bottom']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top', 'bottom']}>
         <NavigationContainer>
           <AuthProvider>
             <DebtProvider>

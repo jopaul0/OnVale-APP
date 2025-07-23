@@ -7,28 +7,32 @@ import {
     Dimensions
 } from 'react-native';
 
-const KeyboardScroll: FC<{ children: ReactNode }> = ({ children }) => (
-    <KeyboardAvoidingView
-        style={styles.wrapper}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-        <ScrollView
-            contentContainerStyle={styles.scrollContent}
-            keyboardShouldPersistTaps="handled"
+import useTheme from './Themes';
+
+const KeyboardScroll: FC<{ children: ReactNode }> = ({ children }) => {
+
+    const { height } = Dimensions.get('window');
+    const { colors } = useTheme();
+    const styles = StyleSheet.create({
+        wrapper: { flex: 1, backgroundColor: colors.background},
+        scrollContent: {
+            minHeight: height,
+            flexGrow: 1,
+        },
+    });
+    return (
+        <KeyboardAvoidingView
+            style={styles.wrapper}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-            {children}
-        </ScrollView>
-    </KeyboardAvoidingView>
-);
+            <ScrollView
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps="handled"
+            >
+                {children}
+            </ScrollView>
+        </KeyboardAvoidingView>
+    );
+}
 
 export default KeyboardScroll;
-
-const { height } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-    wrapper: { flex: 1 },
-    scrollContent: {
-        minHeight: height,
-        flexGrow: 1,       
-    },
-});
