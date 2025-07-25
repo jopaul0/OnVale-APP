@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model admins {
+  id            Int        @id @default(autoincrement())
+  name          String
+  email         String     @unique
+  password_hash String
+  role          AdminRole  @default(default)
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
+  deleted_at    DateTime?
+  updated_by_id Int?
+  updated_by    admins?    @relation("AdminUpdatedBy", fields: [updated_by_id], references: [id])
+  updated_admins admins[]  @relation("AdminUpdatedBy")
+}
+
+model companies {
+  id              Int              @id @default(autoincrement())
+  name            String
+  cnpj            String           @unique
+  email           String           @unique
+  password_hash   String
+  status          CompanyStatus    @default(active)
+  created_at      DateTime         @default(now())
+  updated_at      DateTime?
+  deleted_at      DateTime?
+  updated_by_id   Int?
+  updated_by_type UserType?
+  contacts        contacts[]
+  onedrive_items  onedrive_items[]
+  item_visibility item_visibility[]
+  onedrive_tokens onedrive_tokens[]
+}
+
+model contacts {
+  id              Int        @id @default(autoincrement())
+  company_id      Int
+  company         companies  @relation(fields: [company_id], references: [id])
+  name            String
+  email           String
+  phone           String
+  birth_date      DateTime
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @default(now())
+  deleted_at      DateTime?
+  updated_by_type UserType?
+  updated_by_id   Int?
+}
+
+model sessions {
+  id          Int      @id @default(autoincrement())
+  token       String   @unique
+  user_type   UserType
+  user_id     Int
+  device_info String?
+  ip_address  String?
+  created_at  DateTime @default(now())
+  expires_at  DateTime
+}
+
+model onedrive_items {
+  id               Int              @id @default(autoincrement())
+  company_id       Int
+  company          companies        @relation(fields: [company_id], references: [id])
+  item_id          String           @unique
+  parent_item_id   String?
+  name             String
+  type             ItemType
+  size             Int?
+  mime_type        String?
+  onedrive_path    String?
+  etag             String?
+  last_modified_by String?
+  created_at       DateTime         @default(now())
+  updated_at       DateTime?
+  deleted_at       DateTime?
+  updated_by_id    Int?
+  item_visibility  item_visibility[]
+}
+
+model item_visibility {
+  id            Int            @id @default(autoincrement())
+  company_id    Int
+  company       companies      @relation(fields: [company_id], references: [id])
+  item_id       Int
+  onedrive_item onedrive_items @relation(fields: [item_id], references: [id])
+  is_visible    Boolean        @default(true)
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @default(now())
+  updated_by_id Int?
+}
+
+model password_resets {
+  id         Int      @id @default(autoincrement())
+  email      String
+  user_type  UserType
+  token      String   @unique
+  expires_at DateTime
+  created_at DateTime @default(now())
+  used       Boolean  @default(false)
+}
+
+model audit_logs {
+  id          Int      @id @default(autoincrement())
+  user_type   UserType
+  user_id     Int
+  action      String
+  entity_type String?
+  entity_id   Int?
+  details     String?
+  ip_address  String
+  created_at  DateTime @default(now())
+}
+
+model notifications {
+  id         Int              @id @default(autoincrement())
+  user_type  UserType
+  user_id    Int
+  type       NotificationType @default(info)
+  title      String?
+  message    String
+  priority   PriorityLevel    @default(normal)
+  read       Boolean          @default(false)
+  created_at DateTime         @default(now())
+}
+
+model onedrive_tokens {
+  id            Int        @id @default(autoincrement())
+  company_id    Int
+  company       companies  @relation(fields: [company_id], references: [id])
+  access_token  String
+  refresh_token String
+  expires_at    DateTime
+  created_at    DateTime   @default(now())
+  updated_at    DateTime?
+}
+
+model app_settings {
+  id         Int      @id @default(autoincrement())
+  key        String   @unique
+  value      String
+  updated_at DateTime?
+}
+
+enum AdminRole {
+  default
+  full
+}
+
+enum CompanyStatus {
+  active
+  pending
+  suspended
+}
+
+enum UserType {
+  admins
+  companies
+}
+
+enum ItemType {
+  file
+  folder
+}
+
+enum NotificationType {
+  system
+  alert
+  info
+}
+
+enum PriorityLevel {
+  low
+  normal
+  high
+}
