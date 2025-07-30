@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 //COMPONENTS
-import FaqItem from '../components/FaqItem';
-import { SupportCard } from '../components/Card';
+import FaqItem from '../../components/FaqItem';
+import { SupportCard } from '../../components/Card';
 
 //THEME
-import useTheme from '../components/Themes';
-import Section from '../components/Section';
-import Divider from '../components/Divider'
+import useTheme from '../../components/Themes';
+import Section from '../../components/Section';
+import Divider from '../../components/Divider'
 
 
 

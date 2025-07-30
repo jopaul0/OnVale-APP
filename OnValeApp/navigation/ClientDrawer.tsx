@@ -3,22 +3,21 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //SCREENS
-import SettingsScreen from '../screens/SettingsScreen';
-import HomeScreen from '../screens/HomeScreen';
-import SupportScreen from '../screens/SupportScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import HomeScreen from '../screens/client/HomeScreen';
+import ProfileScreen from '../screens/client/ProfileScreen';
+import SettingsScreen from '../screens/client/SettingsScreen';
+import SupportScreen from '../screens/client/SupportScreen';
 
 //COMPONENTS
 import { OnValeIcon } from '../components/Icons';
 import { CustomDrawer } from '../components/CustomDrawer';
 import useTheme from '../components/Themes';
 
-
 //CONSTANTS
 const Drawer = createDrawerNavigator();
 
 //FUNCTIONS
-export default function AppRoutes() {
+export default function ClientDrawer() {
 
   //STYLE
   const { colors } = useTheme();
@@ -34,35 +33,28 @@ export default function AppRoutes() {
           height: 60,
         },
         headerStatusBarHeight: 0,
-        headerLeftContainerStyle: {
-          alignItems: 'center'
-        },
+        headerLeftContainerStyle: { alignItems: 'center' },
+        headerTitle: '',
         headerRight: () => <OnValeIcon size={40} />,
         headerRightContainerStyle: {
           paddingRight: 16,
-          alignItems: 'center'
+          alignItems: 'center',
         },
-        headerTitle: '',
         drawerStyle: {
           backgroundColor: colors.background,
           width: 300,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
           elevation: 6,
         },
         drawerActiveBackgroundColor: '#9B1A1E',
-        drawerActiveTintColor: '#fff',
+        drawerActiveTintColor: '#f6f6f6',
         drawerInactiveTintColor: colors.text,
         drawerLabelStyle: { fontSize: 16, fontWeight: 'bold' },
       }}
     >
       <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Início' }} />
       <Drawer.Screen name="ProfileScreen" component={ProfileScreen} options={{ title: 'Perfil' }} />
-      <Drawer.Screen name="SupportScreen" component={SupportScreen} options={{ title: 'Suporte' }} />
       <Drawer.Screen name="SettingsScreen" component={SettingsScreen} options={{ title: 'Configurações' }} />
+      <Drawer.Screen name="SupportScreen" component={SupportScreen} options={{ title: 'Suporte' }} />
     </Drawer.Navigator>
   );
 }
-

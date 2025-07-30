@@ -19,6 +19,7 @@ import { useAuth } from '../navigation/AuthContext';
 
 //THEME
 import useTheme from '../components/Themes';
+import { useDebt, DebtLevel } from '../navigation/DebtContext';
 
 //FUNCTION
 export default function LoginScreen() {
@@ -26,6 +27,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const { setDebtLevel } = useDebt();
 
   //HOOK
   const { login } = useAuth();
@@ -65,17 +67,36 @@ export default function LoginScreen() {
 
   //TEST
   const credencials = {
-    email: "onvale@teste.com",
-    CNPJ: "123123123123",
-    password: "onvale123"
+    client: {
+      email: "atlas@teste.com",
+      CNPJ: "123123123123",
+      password: "atlas123",
+      debt: 0
+    },
+    admin: {
+      email: "onvale@teste.com",
+      CNPJ: "123123123123",
+      password: "onvale123",
+      debt: 0
+    }
   }
 
 
   //HANDLES
   function handleLogin() {
-    if ((email === credencials.email || email === credencials.CNPJ) && senha === credencials.password) {
-      login();
-    } else {
+
+    //LOGICA
+    if ((email === credencials.client.email || email === credencials.client.CNPJ) && senha === credencials.client.password) {
+      login('client');
+      setDebtLevel(credencials.client.debt as DebtLevel)
+    }
+
+    else if ((email === credencials.admin.email || email === credencials.admin.CNPJ) && senha === credencials.admin.password) {
+      login('admin');
+      setDebtLevel(credencials.admin.debt as DebtLevel)
+    }
+
+    else {
       setErrorModalVisible(true);
       setEmail('');
       setSenha('');

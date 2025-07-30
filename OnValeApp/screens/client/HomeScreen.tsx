@@ -3,9 +3,11 @@ import React, { useState, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 //COMPONENTS
-import FileExplorer, { ExplorerNode } from '../components/FileExplorer';
-import Carousel, { Banner } from '../components/Carousel';
-import Shortcuts from '../components/Shortcuts';
+import FileExplorer, { ExplorerNode } from '../../components/FileExplorer';
+import Carousel, { Banner } from '../../components/Carousel';
+import Shortcuts from '../../components/Shortcuts';
+import { useTheme } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 //FUNCTION
 export default function HomeScreen() {
@@ -13,7 +15,16 @@ export default function HomeScreen() {
   const [pathStack, setPathStack] = useState<ExplorerNode[]>([]);
 
   //STYLE
+  const { colors } = useTheme();
   const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background
+    },
+    innercontainer: {
+      flex: 1,
+      backgroundColor: colors.background
+    },
     carouselContainer: {
       overflow: 'hidden'
     },
@@ -44,9 +55,9 @@ export default function HomeScreen() {
   ];
 
   const banners: Banner[] = [
-    { id: '1', image: require('../assets/banner1.jpg'), url: "https://www.instagram.com/p/DMKvuo2st0i/" },
-    { id: '2', image: require('../assets/banner2.jpg'), url: "https://www.instagram.com/p/DMIK8L0MQZM/" },
-    { id: '3', image: require('../assets/banner3.jpeg') },
+    { id: '1', image: require('../../assets/banner1.jpg'), url: "https://www.instagram.com/p/DMKvuo2st0i/" },
+    { id: '2', image: require('../../assets/banner2.jpg'), url: "https://www.instagram.com/p/DMIK8L0MQZM/" },
+    { id: '3', image: require('../../assets/banner3.jpeg') },
   ];
 
 
@@ -86,16 +97,18 @@ export default function HomeScreen() {
 
   //JSX
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.carouselContainer}>
-        <Carousel data={banners} height={300} />
-      </View>
+    <View style={styles.container}>
+      <ScrollView style={styles.innercontainer} contentContainerStyle={{ paddingBottom: 100 }}>
+        <View style={styles.carouselContainer}>
+          <Carousel data={banners} height={300} />
+        </View>
 
-      <FileExplorer
-        data={fakeData}
-        pathStack={pathStack}
-        setPathStack={setPathStack}
-      />
+        <FileExplorer
+          data={fakeData}
+          pathStack={pathStack}
+          setPathStack={setPathStack}
+        />
+      </ScrollView>
 
       <Shortcuts
         onHome={() => setPathStack([])}
@@ -106,5 +119,6 @@ export default function HomeScreen() {
       />
     </View>
   );
+
 }
 

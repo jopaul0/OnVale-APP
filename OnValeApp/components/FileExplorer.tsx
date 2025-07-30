@@ -114,6 +114,7 @@ export default function FileExplorer({
   }
 
   //JSX
+  //JSX
   return (
     <View style={[styles.container, { backgroundColor: colors.background2 }]}>
       {/* Breadcrumb */}
@@ -130,16 +131,33 @@ export default function FileExplorer({
         </Text>
       </View>
 
-      <FlatList
-        data={currentNodes}
-        keyExtractor={n => n.id}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => (
-          <View style={[styles.separator, { backgroundColor: colors.border }]} />
-        )}
-        {...flatListProps}
-      />
+      {/* Lista sem scroll interno */}
+      {currentNodes.map((item, index) => (
+        <React.Fragment key={item.id}>
+          <TouchableOpacity
+            style={[styles.row]}
+            onPress={() =>
+              item.type === 'folder' ? enterFolder(item) : onFilePress?.(item)
+            }
+          >
+            <Feather
+              name={item.type === 'folder' ? 'folder' : 'file'}
+              size={24}
+              color={item.type === 'folder' ? '#f39c12' : colors.text}
+              style={styles.icon}
+            />
+            <Text style={[styles.name, { color: colors.text }]}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
+          {/* Separador */}
+          {index < currentNodes.length - 1 && (
+            <View style={[styles.separator, { backgroundColor: colors.border }]} />
+          )}
+        </React.Fragment>
+      ))}
     </View>
   );
+
 }
 

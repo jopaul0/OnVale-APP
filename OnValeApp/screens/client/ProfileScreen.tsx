@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { ScrollView, View, Image, StyleSheet } from 'react-native';
 
 //THEME
-import useTheme from '../components/Themes';
-import Divider from '../components/Divider';
-import BaseCard from '../components/Card';
-import Section from '../components/Section';
-import Field from '../components/Field';
+import useTheme from '../../components/Themes';
+import Divider from '../../components/Divider';
+import BaseCard from '../../components/Card';
+import Section from '../../components/Section';
+import Field from '../../components/Field';
 
 //FUNCTION
 export default function ProfileScreen() {
@@ -21,7 +21,7 @@ export default function ProfileScreen() {
 
     //TEST
     const company = {
-        logo: require('../assets/company-logo2.png'),
+        logo: require('../../assets/company-logo2.png'),
         companyName: 'Atlas Tech Solutions Ltd.',
         cnpj: '45.678.912/0001-34',
         people: [

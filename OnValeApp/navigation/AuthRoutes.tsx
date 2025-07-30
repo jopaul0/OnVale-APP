@@ -6,7 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 
 //COMPONENTS
-import AppRoutes from './AppRoutes';
+import ClientDrawer from './ClientDrawer';
+import AdminDrawer from './AdminDrawer';
 import DebtGuard from '../components/DebtGuard';
 
 //HOOK
@@ -17,29 +18,29 @@ const Stack = createNativeStackNavigator();
 
 //FUNCTION
 export default function AuthRoutes() {
+
   //STATE
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, userType } = useAuth();
 
   //WRAPPER FUNCTION
-  function AppWithGuards() {
+  function AppWithGuards({ children }: { children: React.ReactNode }) {
     return (
       <DebtGuard>
-        <AppRoutes />
+        {children}
       </DebtGuard>
     );
   }
-  
+
   //JSX
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isLoggedIn ? (
-        <Stack.Screen name="App" component={AppWithGuards} />
-      ) : (
+      {!isLoggedIn ? (
         <Stack.Screen name="Login" component={LoginScreen} />
+      ) : userType === 'admin' ? (
+        <Stack.Screen name="AdminDrawer" children={() => <AppWithGuards><AdminDrawer /></AppWithGuards>} />
+      ) : (
+        <Stack.Screen name="ClientDrawer" children={() => <AppWithGuards><ClientDrawer /></AppWithGuards>} />
       )}
     </Stack.Navigator>
   );
 }
-
-
-
