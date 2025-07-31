@@ -16,6 +16,7 @@ import { ErrorModal } from '../components/Modals';
 
 //CONTEXT
 import { useAuth } from '../navigation/AuthContext';
+import { loginUser } from '../api/auth';
 
 //THEME
 import useTheme from '../components/Themes';
@@ -65,38 +66,14 @@ export default function LoginScreen() {
     },
   });
 
-  //TEST
-  const credencials = {
-    client: {
-      email: "atlas@teste.com",
-      CNPJ: "123123123123",
-      password: "atlas123",
-      debt: 0
-    },
-    admin: {
-      email: "onvale@teste.com",
-      CNPJ: "123123123123",
-      password: "onvale123",
-      debt: 0
-    }
-  }
-
-
   //HANDLES
-  function handleLogin() {
-
-    //LOGICA
-    if ((email === credencials.client.email || email === credencials.client.CNPJ) && senha === credencials.client.password) {
-      login('client');
-      setDebtLevel(credencials.client.debt as DebtLevel)
-    }
-
-    else if ((email === credencials.admin.email || email === credencials.admin.CNPJ) && senha === credencials.admin.password) {
-      login('admin');
-      setDebtLevel(credencials.admin.debt as DebtLevel)
-    }
-
-    else {
+  async function handleLogin() {
+    try {
+      const data = await loginUser(email, senha);
+      console.log('LOGIN OK:', data);
+      await login(data.account_type, data.token);
+      setDebtLevel(0);
+    } catch (err: any) {
       setErrorModalVisible(true);
       setEmail('');
       setSenha('');

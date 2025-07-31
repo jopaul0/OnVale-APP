@@ -36,7 +36,7 @@ export default function AuthRoutes() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {!isLoggedIn ? (
         <Stack.Screen name="Login" component={LoginScreen} />
-      ) : userType === 'admin' ? (
+      ) : userType === 'admins' ? (
         <Stack.Screen name="AdminDrawer" children={() => <AppWithGuards><AdminDrawer /></AppWithGuards>} />
       ) : (
         <Stack.Screen name="ClientDrawer" children={() => <AppWithGuards><ClientDrawer /></AppWithGuards>} />

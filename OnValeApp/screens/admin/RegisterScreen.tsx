@@ -6,7 +6,7 @@ import { View, StyleSheet, Dimensions } from 'react-native';
 import SimpleButton from '../../components/SimpleButton';
 import SimpleTextInput from '../../components/SimpleTextInput';
 import KeyboardScroll from '../../components/KeyboardScroll';
-import RegisterTabs from '../../components/RegisterTabs';
+import AdminTabs from '../../components/AdminTabs';
 import useTheme from '../../components/Themes';
 
 //FUNCTION
@@ -35,8 +35,8 @@ export default function RegisterScreen() {
       backgroundColor: colors.background
     },
     button: {
-      paddingHorizontal: 64,
-      alignItems: 'center'
+      flexDirection: 'row',
+      justifyContent: 'center'
     }
   });
 
@@ -44,7 +44,7 @@ export default function RegisterScreen() {
   return (
     <KeyboardScroll style={styles.container}>
       <View style={styles.form}>
-        <RegisterTabs activeTab={activeTab} onChangeTab={setActiveTab} />
+        <AdminTabs activeTab={activeTab} onChangeTab={setActiveTab} />
         <SimpleTextInput placeholder="Nome" value={nome} onChange={setNome} />
 
         {activeTab === 'company' && (
@@ -76,6 +76,5 @@ export default function RegisterScreen() {
         </View>
       </View>
     </KeyboardScroll>
-
   );
 }

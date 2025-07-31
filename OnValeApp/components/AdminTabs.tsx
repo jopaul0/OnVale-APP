@@ -9,7 +9,7 @@ type Props = {
 };
 
 //FUNCTION
-export default function RegisterTabs({ activeTab, onChangeTab }: Props) {
+export default function AdminTabs({ activeTab, onChangeTab }: Props) {
     const { colors } = useTheme();
 
     const styles = StyleSheet.create({

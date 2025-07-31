@@ -2,8 +2,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import prisma from './prisma';
-import bcrypt from 'bcrypt';
+
+//ROUTERS
+import AuthRouter  from './routes/auth.routes'
+import CompaniesRouter from './routes/company.routes';
 
 //.ENV
 dotenv.config();
@@ -16,10 +18,18 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+//ROUTES
+app.use('/company', AuthRouter);
+
+app.use('/company', CompaniesRouter);
+
+
 //TEST
 app.get('/', (req, res) => {
   res.send('OnVale Backend is running!');
 });
+
+
 
 //START
 app.listen(PORT, () => {
