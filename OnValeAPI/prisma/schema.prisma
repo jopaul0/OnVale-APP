@@ -27,6 +27,7 @@ model companies {
   cnpj            String           @unique
   email           String           @unique
   password_hash   String
+  logo_path String?
   status          CompanyStatus    @default(active)
   created_at      DateTime         @default(now())
   updated_at      DateTime?

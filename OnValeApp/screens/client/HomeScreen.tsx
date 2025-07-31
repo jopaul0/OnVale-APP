@@ -1,13 +1,13 @@
 //REACT
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 //COMPONENTS
 import FileExplorer, { ExplorerNode } from '../../components/FileExplorer';
 import Carousel, { Banner } from '../../components/Carousel';
 import Shortcuts from '../../components/Shortcuts';
-import { useTheme } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
+import useTheme from '../../components/Themes';
+
 
 //FUNCTION
 export default function HomeScreen() {
@@ -19,11 +19,11 @@ export default function HomeScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background
+      backgroundColor: colors.background2
     },
     innercontainer: {
       flex: 1,
-      backgroundColor: colors.background
+      backgroundColor: colors.background2
     },
     carouselContainer: {
       overflow: 'hidden'
@@ -98,7 +98,7 @@ export default function HomeScreen() {
   //JSX
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.innercontainer} contentContainerStyle={{ paddingBottom: 100 }}>
+      <ScrollView  contentContainerStyle={styles.innercontainer}>
         <View style={styles.carouselContainer}>
           <Carousel data={banners} height={300} />
         </View>

@@ -36,7 +36,7 @@ export default function RegisterTabs({ activeTab, onChangeTab }: Props) {
                 onPress={() => onChangeTab('company')}
                 style={[
                     styles.tabButton,
-                    { backgroundColor: activeTab === 'company' ? '#9B1A1E' : colors.background },
+                    { backgroundColor: activeTab === 'company' ? '#9B1A1E' : colors.background2 },
                 ]}
             >
                 <Text
@@ -53,7 +53,7 @@ export default function RegisterTabs({ activeTab, onChangeTab }: Props) {
                 onPress={() => onChangeTab('admin')}
                 style={[
                     styles.tabButton,
-                    { backgroundColor: activeTab === 'admin' ? '#9B1A1E' : colors.background },
+                    { backgroundColor: activeTab === 'admin' ? '#9B1A1E' : colors.background2 },
                 ]}
             >
                 <Text

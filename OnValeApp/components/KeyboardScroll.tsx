@@ -5,7 +5,8 @@ import {
     ScrollView,
     Platform,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    ViewStyle
 } from 'react-native';
 
 //THEME
@@ -13,16 +14,18 @@ import useTheme from './Themes';
 
 //TYPE
 type props = {
-    children: ReactNode
+    children: ReactNode,
+    style?: ViewStyle,
+    wrapperStyle?: ViewStyle
 }
 
 //FUNCTION
-export default function KeyboardScroll ({ children } : props) {
+export default function KeyboardScroll ({ children, style, wrapperStyle } : props) {
     //STYLE
     const { height } = Dimensions.get('window');
     const { colors } = useTheme();
     const styles = StyleSheet.create({
-        wrapper: { flex: 1, backgroundColor: colors.background},
+        wrapper: { flex: 1, backgroundColor: colors.background2},
         scrollContent: {
             minHeight: height,
             flexGrow: 1,
@@ -31,11 +34,11 @@ export default function KeyboardScroll ({ children } : props) {
     //JSX
     return (
         <KeyboardAvoidingView
-            style={styles.wrapper}
+            style={[styles.wrapper, wrapperStyle]}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
             <ScrollView
-                contentContainerStyle={styles.scrollContent}
+                contentContainerStyle={[styles.scrollContent, style]}
                 keyboardShouldPersistTaps="handled"
             >
                 {children}
