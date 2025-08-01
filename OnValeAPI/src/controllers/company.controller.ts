@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import * as companyService from '../services/company.service';
 import { AuthenticatedRequest } from '../middleware/auth';
+import delay from '../utils/delay';
 
 export async function getProfile(req: AuthenticatedRequest, res: Response) {
+  await delay(2000);
   try {
     if (req.user?.type !== 'companies') {
       return res.status(403).json({ error: true, message: 'Acesso negado' });

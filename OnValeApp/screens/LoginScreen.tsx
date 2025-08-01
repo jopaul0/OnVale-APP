@@ -13,6 +13,7 @@ import KeyboardScroll from '../components/KeyboardScroll';
 import SimpleButton from '../components/SimpleButton';
 import SimpleTextInput from '../components/SimpleTextInput';
 import { ErrorModal } from '../components/Modals';
+import Loading from '../components/Loading';
 
 //CONTEXT
 import { useAuth } from '../navigation/AuthContext';
@@ -28,6 +29,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { setDebtLevel } = useDebt();
 
   //HOOK
@@ -68,12 +70,15 @@ export default function LoginScreen() {
 
   //HANDLES
   async function handleLogin() {
+    setLoading(true);
     try {
       const data = await loginUser(email, senha);
       console.log('LOGIN OK:', data);
       await login(data.account_type, data.token);
       setDebtLevel(0);
+      setLoading(false);
     } catch (err: any) {
+      setLoading(false);
       setErrorModalVisible(true);
       setEmail('');
       setSenha('');
@@ -125,6 +130,7 @@ export default function LoginScreen() {
         onClose={() => setErrorModalVisible(false)}
         message="Credenciais inválidas. Tente novamente."
       />
+      <Loading visible={loading} />
     </KeyboardScroll>
   );
 }

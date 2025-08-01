@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { handleLogin } from '../services/auth.service';
+import delay from '../utils/delay';
 
 export async function login(req: Request, res: Response) {
     const { login, password } = req.body;
+    await delay(2000);
 
     try {
         const result = await handleLogin(login, password, req);

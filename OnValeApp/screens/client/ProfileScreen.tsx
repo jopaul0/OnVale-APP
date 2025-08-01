@@ -11,10 +11,12 @@ import Divider from '../../components/Divider';
 import BaseCard from '../../components/Card';
 import Section from '../../components/Section';
 import Field from '../../components/Field';
+import Loading from '../../components/Loading';
 
 //FUNCTION
 export default function ProfileScreen() {
   const [company, setCompany] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   const { colors } = useTheme();
   const styles = StyleSheet.create({
@@ -38,19 +40,26 @@ export default function ProfileScreen() {
   });
 
   useEffect(() => {
+    setLoading(true);
     async function loadData() {
       try {
         const data = await getCompanyProfile();
         setCompany(data);
+        setLoading(false);
       } catch (err) {
         console.error('Erro ao carregar dados da empresa:', err);
+        setLoading(false);
       }
     }
 
     loadData();
   }, []);
 
-  if (!company) return null;
+  if (!company) return (
+    <ScrollView style={{ flex: 1, backgroundColor: colors.background2 }}>
+      <Loading visible={loading} />
+    </ScrollView>
+  );
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: colors.background2 }}>
@@ -96,6 +105,7 @@ export default function ProfileScreen() {
           ))
         )}
       </Section>
+      <Loading visible={loading} />
     </ScrollView>
   );
 }
