@@ -8,7 +8,6 @@ import LoginScreen from '../screens/LoginScreen';
 //COMPONENTS
 import ClientDrawer from './ClientDrawer';
 import AdminDrawer from './AdminDrawer';
-import DebtGuard from '../components/DebtGuard';
 
 //HOOK
 import { useAuth } from './AuthContext';
@@ -22,14 +21,6 @@ export default function AuthRoutes() {
   //STATE
   const { isLoggedIn, userType } = useAuth();
 
-  //WRAPPER FUNCTION
-  function AppWithGuards({ children }: { children: React.ReactNode }) {
-    return (
-      <DebtGuard>
-        {children}
-      </DebtGuard>
-    );
-  }
 
   //JSX
   return (
@@ -37,9 +28,9 @@ export default function AuthRoutes() {
       {!isLoggedIn ? (
         <Stack.Screen name="Login" component={LoginScreen} />
       ) : userType === 'admins' ? (
-        <Stack.Screen name="AdminDrawer" children={() => <AppWithGuards><AdminDrawer /></AppWithGuards>} />
+        <Stack.Screen name="AdminDrawer" children={() => <AdminDrawer />} />
       ) : (
-        <Stack.Screen name="ClientDrawer" children={() => <AppWithGuards><ClientDrawer /></AppWithGuards>} />
+        <Stack.Screen name="ClientDrawer" children={() => <ClientDrawer />} />
       )}
     </Stack.Navigator>
   );

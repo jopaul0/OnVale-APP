@@ -8,17 +8,18 @@ datasource db {
 }
 
 model admins {
-  id            Int        @id @default(autoincrement())
-  name          String
-  email         String     @unique
-  password_hash String
-  role          AdminRole  @default(default)
-  created_at    DateTime   @default(now())
-  updated_at    DateTime   @default(now())
-  deleted_at    DateTime?
-  updated_by_id Int?
-  updated_by    admins?    @relation("AdminUpdatedBy", fields: [updated_by_id], references: [id])
-  updated_admins admins[]  @relation("AdminUpdatedBy")
+  id              Int        @id @default(autoincrement())
+  name            String
+  email           String     @unique
+  password_hash   String
+  role            AdminRole  @default(default)
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @default(now())
+  deleted_at      DateTime?
+  updated_by_id   Int?
+  updated_by      admins?    @relation("AdminUpdatedBy", fields: [updated_by_id], references: [id])
+  updated_admins  admins[]   @relation("AdminUpdatedBy")
+  communications  communications[] @relation("SenderCommunications")
 }
 
 model companies {
@@ -27,7 +28,7 @@ model companies {
   cnpj            String           @unique
   email           String           @unique
   password_hash   String
-  logo_path String?
+  first_access Boolean @default(true)
   status          CompanyStatus    @default(active)
   created_at      DateTime         @default(now())
   updated_at      DateTime?
@@ -38,12 +39,13 @@ model companies {
   onedrive_items  onedrive_items[]
   item_visibility item_visibility[]
   onedrive_tokens onedrive_tokens[]
+  communications  communications[] @relation("CompanyCommunications")
 }
 
 model contacts {
   id              Int        @id @default(autoincrement())
   company_id      Int
-  company         companies  @relation(fields: [company_id], references: [id])
+  company         companies  @relation(fields: [company_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   name            String
   email           String
   phone           String
@@ -53,6 +55,7 @@ model contacts {
   deleted_at      DateTime?
   updated_by_type UserType?
   updated_by_id   Int?
+  communications  communications[] @relation("ContactCommunications")
 }
 
 model sessions {
@@ -69,7 +72,7 @@ model sessions {
 model onedrive_items {
   id               Int              @id @default(autoincrement())
   company_id       Int
-  company          companies        @relation(fields: [company_id], references: [id])
+  company          companies        @relation(fields: [company_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   item_id          String           @unique
   parent_item_id   String?
   name             String
@@ -89,9 +92,9 @@ model onedrive_items {
 model item_visibility {
   id            Int            @id @default(autoincrement())
   company_id    Int
-  company       companies      @relation(fields: [company_id], references: [id])
+  company       companies      @relation(fields: [company_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   item_id       Int
-  onedrive_item onedrive_items @relation(fields: [item_id], references: [id])
+  onedrive_item onedrive_items @relation(fields: [item_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   is_visible    Boolean        @default(true)
   created_at    DateTime       @default(now())
   updated_at    DateTime       @default(now())
@@ -135,7 +138,7 @@ model notifications {
 model onedrive_tokens {
   id            Int        @id @default(autoincrement())
   company_id    Int
-  company       companies  @relation(fields: [company_id], references: [id])
+  company       companies  @relation(fields: [company_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   access_token  String
   refresh_token String
   expires_at    DateTime
@@ -148,6 +151,20 @@ model app_settings {
   key        String   @unique
   value      String
   updated_at DateTime?
+}
+
+model communications {
+  id           Int        @id @default(autoincrement())
+  sender_id    Int
+  sender       admins     @relation("SenderCommunications", fields: [sender_id], references: [id])
+  message      String
+  file_path    String?
+  target_type  TargetType
+  company_id   Int?       // se for para empresa
+  company      companies? @relation("CompanyCommunications", fields: [company_id], references: [id])
+  contact_id   Int?       // se for para contato
+  contact      contacts?  @relation("ContactCommunications", fields: [contact_id], references: [id])
+  created_at   DateTime   @default(now())
 }
 
 enum AdminRole {
@@ -181,4 +198,9 @@ enum PriorityLevel {
   low
   normal
   high
+}
+
+enum TargetType {
+  company
+  contact
 }

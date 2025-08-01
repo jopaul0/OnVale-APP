@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 import isEmail from '../utils/isEmail';
 import { Request } from 'express';
 
+//FUNCTIONS
+//LOGIN
 export async function handleLogin(login: string, password: string, req: Request) {
     let user: any = null;
     let userType: 'admins' | 'companies' | null = null;
@@ -58,4 +60,32 @@ export async function handleLogin(login: string, password: string, req: Request)
         },
         error: false,
     };
+}
+
+//CREATE COMPANY
+export async function createCompany(name: string, cnpj: string, email: string, password: string) {
+    const hashed = await bcrypt.hash(password, 10);
+
+    return await prisma.companies.create({
+        data: {
+            name,
+            cnpj,
+            email,
+            password_hash: hashed
+        },
+    });
+}
+
+
+//CREATE ADMIN
+export async function createAdmin(name: string, email: string, password: string) {
+    const hashed = await bcrypt.hash(password, 10);
+
+    return await prisma.admins.create({
+        data: {
+            name,
+            email,
+            password_hash: hashed
+        },
+    });
 }

@@ -18,20 +18,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState<UserType>(null);
 
-  useEffect(() => {
-    const loadStorageData = async () => {
-      const token = await AsyncStorage.getItem('token');
-      const type = (await AsyncStorage.getItem('user_type')) as UserType;
-
-      if (token && type) {
-        setIsLoggedIn(true);
-        setUserType(type);
-      }
-    };
-
-    loadStorageData();
-  }, []);
-
   const login = async (type: UserType, token: string) => {
     await AsyncStorage.setItem('token', token);
     await AsyncStorage.setItem('user_type', type || '');

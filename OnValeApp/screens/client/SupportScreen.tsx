@@ -33,7 +33,7 @@ export default function SupportScreen() {
                     ))}
                 </View>
             </Section>
-            <Divider/>
+            <Divider />
             <Section title="Fale Conosco" note='Conecte-se conosco nos canais oficiais: suporte, dúvidas e sugestões são sempre bem-vindos por lá. Responderemos o quanto antes!'>
                 <SupportCard
                     icon="mail"
@@ -58,6 +58,12 @@ export default function SupportScreen() {
                     label="Endereço"
                     value="Avenida Brasil, 338, Sala 3 — São José dos Campos/SP"
                     url="https://www.google.com/maps/place/OnVale+Contabilidade/@-23.1822569,-45.8763352,17z/data=!3m1!4b1!4m6!3m5!1s0x94cc4bebee442563:0x478ea0740fea08e9!8m2!3d-23.1822569!4d-45.873974!16s%2Fg%2F11s892w3vc?entry=ttu&g_ep=EgoyMDI1MDcxNi4wIKXMDSoASAFQAw%3D%3D"
+                />
+                <SupportCard
+                    icon="globe"
+                    label="Site"
+                    value="Acesse nosso site!"
+                    url="https://www.onvale.com.br/"
                 />
             </Section>
         </ScrollView>

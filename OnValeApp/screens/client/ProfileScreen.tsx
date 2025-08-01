@@ -64,21 +64,6 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: colors.background2 }}>
-      {/* LOGO DA EMPRESA */}
-      <View style={styles.logoBox}>
-        {company.logo_path ? (
-          <Image
-            source={{ uri: `${API_URL}/uploads/${company.logo_path}` }}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        ) : (
-          <View style={styles.placeholderLogo}>
-            <Text style={{ color: '#888' }}>Sem logo</Text>
-          </View>
-        )}
-      </View>
-
       {/* DADOS DA EMPRESA */}
       <Section title="Dados da empresa" note="O CNPJ não pode ser alterado pelo app.">
         <BaseCard>

@@ -4,8 +4,8 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import useTheme from './Themes';
 
 type Props = {
-    activeTab: 'company' | 'admin';
-    onChangeTab: (tab: 'company' | 'admin') => void;
+    activeTab: 'companies' | 'admins';
+    onChangeTab: (tab: 'companies' | 'admins') => void;
 };
 
 //FUNCTION
@@ -15,8 +15,7 @@ export default function AdminTabs({ activeTab, onChangeTab }: Props) {
     const styles = StyleSheet.create({
         tabContainer: {
             flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 24,
+            justifyContent: 'center'
         },
         tabButton: {
             paddingVertical: 10,
@@ -33,16 +32,16 @@ export default function AdminTabs({ activeTab, onChangeTab }: Props) {
     return (
         <View style={styles.tabContainer}>
             <TouchableOpacity
-                onPress={() => onChangeTab('company')}
+                onPress={() => onChangeTab('companies')}
                 style={[
                     styles.tabButton,
-                    { backgroundColor: activeTab === 'company' ? '#9B1A1E' : colors.background2 },
+                    { backgroundColor: activeTab === 'companies' ? '#9B1A1E' : colors.background2 },
                 ]}
             >
                 <Text
                     style={[
                         styles.tabText,
-                        { color: activeTab === 'company' ? '#f6f6f6' : colors.text },
+                        { color: activeTab === 'companies' ? '#f6f6f6' : colors.text },
                     ]}
                 >
                     Empresa
@@ -50,16 +49,16 @@ export default function AdminTabs({ activeTab, onChangeTab }: Props) {
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => onChangeTab('admin')}
+                onPress={() => onChangeTab('admins')}
                 style={[
                     styles.tabButton,
-                    { backgroundColor: activeTab === 'admin' ? '#9B1A1E' : colors.background2 },
+                    { backgroundColor: activeTab === 'admins' ? '#9B1A1E' : colors.background2 },
                 ]}
             >
                 <Text
                     style={[
                         styles.tabText,
-                        { color: activeTab === 'admin' ? '#f6f6f6' : colors.text },
+                        { color: activeTab === 'admins' ? '#f6f6f6' : colors.text },
                     ]}
                 >
                     Admin

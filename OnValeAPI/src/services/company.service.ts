@@ -15,7 +15,6 @@ export async function getCompanyByIdWithDetails(id: number) {
     name: company.name,
     cnpj: company.cnpj,
     email: company.email,
-    logo_path: company.logo_path,
     contacts: company.contacts.map((c) => ({
       id: c.id,
       name: c.name,

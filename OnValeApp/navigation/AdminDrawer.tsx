@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //SCREENS
 import RegisterScreen from '../screens/admin/RegisterScreen';
+import UsersListScreen from '../screens/admin/UsersListScreen';
 
 //COMPONENTS
 import { OnValeIcon, OnValeIconWhite } from '../components/Icons';
@@ -26,7 +27,7 @@ export default function AdminDrawer() {
       screenOptions={{
         headerTintColor: '#f6f6f6',
         headerStyle: {
-          backgroundColor:'#9B1A1E',
+          backgroundColor: '#9B1A1E',
           height: 60,
         },
         headerStatusBarHeight: 0,
@@ -49,6 +50,7 @@ export default function AdminDrawer() {
       }}
     >
       <Drawer.Screen name="RegisterScreen" component={RegisterScreen} options={{ title: 'Registrar' }} />
+      <Drawer.Screen name="UsersListScreen" component={UsersListScreen} options={{ title: 'Usuários' }} />
     </Drawer.Navigator>
   );
 }
