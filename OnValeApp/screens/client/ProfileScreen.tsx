@@ -4,6 +4,7 @@ import { ScrollView, View, Image, StyleSheet, Text } from 'react-native';
 
 //API
 import { getCompanyProfile } from '../../api/company';
+import API_URL from '../../api/apiURL';
 
 //THEME
 import useTheme from '../../components/Themes';
@@ -67,7 +68,7 @@ export default function ProfileScreen() {
       <View style={styles.logoBox}>
         {company.logo_path ? (
           <Image
-            source={{ uri: company.logo_path }}
+            source={{ uri: `${API_URL}/uploads/${company.logo_path}` }}
             style={styles.logo}
             resizeMode="contain"
           />
